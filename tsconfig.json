@@ -16,6 +16,14 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@w11k/ngx-select": [
+        "dist/w11k/ngx-select"
+      ],
+      "@w11k/ngx-select/*": [
+        "dist/w11k/ngx-select/*"
+      ]
+    }
   }
 }
