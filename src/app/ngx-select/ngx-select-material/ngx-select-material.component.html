@@ -1,0 +1,23 @@
+<mat-form-field>
+  <input matInput readonly (click)="toggleVisibility()" type="text" placeholder="Suchfeld">
+</mat-form-field>
+<button mat-icon-button (click)="toggleVisibility()">
+  <mat-icon>{{ hidden ? 'expand_more': 'expand_less'}}</mat-icon>
+</button>
+<div class="select-container" [class.hidden]="hidden">
+  <div>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Filter">
+    </mat-form-field>
+    <button mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div>
+    <button mat-raised-button>all</button>
+    <button mat-raised-button>none</button>
+  </div>
+  <mat-checkbox>Item Label 1</mat-checkbox>
+  <mat-checkbox>Item Label 2</mat-checkbox>
+  <mat-checkbox>Item Label 3</mat-checkbox>
+</div>
