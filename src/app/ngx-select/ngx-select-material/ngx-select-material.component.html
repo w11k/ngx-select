@@ -13,11 +13,8 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <div>
-    <button mat-raised-button>all</button>
-    <button mat-raised-button>none</button>
-  </div>
-  <mat-checkbox>Item Label 1</mat-checkbox>
-  <mat-checkbox>Item Label 2</mat-checkbox>
-  <mat-checkbox>Item Label 3</mat-checkbox>
+  <button mat-raised-button (click)="changeSelectAllSelectNone()">all / none</button>
+  <mat-checkbox *ngFor="let value of selectOptions"
+                [checked]="value.selected"
+                (change)="changeCheckbox(value)">{{value.label}}</mat-checkbox>
 </div>
