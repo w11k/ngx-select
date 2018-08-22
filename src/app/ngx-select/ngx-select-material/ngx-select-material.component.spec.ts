@@ -5,8 +5,8 @@ import { MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule } fro
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NgxSelectMaterialComponent', () => {
-  let component: NgxSelectMaterialComponent;
-  let fixture: ComponentFixture<NgxSelectMaterialComponent>;
+  let component: NgxSelectMaterialComponent<string>;
+  let fixture: ComponentFixture<NgxSelectMaterialComponent<string>>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

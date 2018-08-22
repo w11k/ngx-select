@@ -16,9 +16,12 @@ export class NgxSelect<T> {
     console.log(item);
   }
 
-  changeSelectAllSelectNone() {
-    // if (this.isAllSelected(this.selectOptions)) {
-    // }
+  toggleAllNoneSelected() {
+    if (this.isAllSelected(this.selectOptions)) {
+      this.selectOptions = this.selectOptions.map(item => ({...item, selected: false}));
+    } else {
+      this.selectOptions = this.selectOptions.map(item => ({...item, selected: true}));
+    }
   }
 
   isAllSelected(options: NgxSelectModel<T>[]) {
