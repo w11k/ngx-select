@@ -5,11 +5,15 @@ import { NgxSelectModel } from '../core/ngx-select.model';
 @Component({
   selector: 'ngx-select',
   templateUrl: './ngx-select-material.component.html',
-  styleUrls: ['./ngx-select-material.component.scss']
+  styleUrls: ['./ngx-select-material.component.scss'],
 })
 export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnInit {
 
-  @Input() selectOptions: NgxSelectModel<T>[] = [];
+  @Input()
+  set originalOptions(value: NgxSelectModel<T>[]) {
+    super.setOriginalOptions(value);
+  }
+
 
   constructor() {
     super();

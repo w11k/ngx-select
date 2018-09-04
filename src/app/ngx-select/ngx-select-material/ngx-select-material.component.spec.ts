@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgxSelectMaterialComponent } from './ngx-select-material.component';
 import { MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('NgxSelectMaterialComponent', () => {
   let component: NgxSelectMaterialComponent<string>;
@@ -17,6 +18,8 @@ describe('NgxSelectMaterialComponent', () => {
         MatButtonModule,
         MatIconModule,
         MatCheckboxModule,
+        FormsModule,
+        ReactiveFormsModule,
       ],
     })
     .compileComponents();

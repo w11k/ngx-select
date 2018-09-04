@@ -83,39 +83,39 @@ describe('NgxSelect', () => {
 
   describe('toggleAllNoneSelected', () => {
     it('should set all to selected if one is unselected', () => {
-      ngxSelect.selectOptions = [
+      ngxSelect.setOriginalOptions([
         {label: '1', value: '1', selected: true},
         {label: '1', value: '1', selected: true},
         {label: '1', value: '1'},
-      ];
+      ]);
 
       ngxSelect.toggleAllNoneSelected();
 
-      const result = ngxSelect.selectOptions.filter(item => item.selected).length;
+      const result = ngxSelect.originalOptions.filter(item => item.selected).length;
       expect(result).toEqual(3);
     });
     it('should set all to selected if more are unselected', () => {
-      ngxSelect.selectOptions = [
+      ngxSelect.setOriginalOptions([
         {label: '1', value: '1', selected: true},
         {label: '1', value: '1', selected: false},
         {label: '1', value: '1'},
-      ];
+      ]);
 
       ngxSelect.toggleAllNoneSelected();
 
-      const result = ngxSelect.selectOptions.filter(item => item.selected).length;
+      const result = ngxSelect.originalOptions.filter(item => item.selected).length;
       expect(result).toEqual(3);
     });
     it('should set all to unselected if all are selected', () => {
-      ngxSelect.selectOptions = [
+      ngxSelect.setOriginalOptions([
         {label: '1', value: '1', selected: true},
         {label: '1', value: '1', selected: true},
         {label: '1', value: '1', selected: true},
-      ];
+      ]);
 
       ngxSelect.toggleAllNoneSelected();
 
-      const result = ngxSelect.selectOptions.filter(item => item.selected).length;
+      const result = ngxSelect.originalOptions.filter(item => item.selected).length;
       expect(result).toEqual(0);
     });
   });
@@ -193,6 +193,26 @@ describe('NgxSelect', () => {
       expect(resultLabels.includes('b1 A')).toBeTruthy();
       expect(resultLabels.includes('A b1')).toBeTruthy();
       expect(resultLabels.includes('A1 b1')).toBeTruthy();
+    });
+
+    it('should filter nothing with empty input', () => {
+      const filterString = '';
+
+      const options = [
+        {label: 'a', value: 'a'},
+        {label: '1', value: '1'},
+        {label: 'bA', value: 'bA'},
+        {label: 'b1', value: 'b1'},
+        {label: 'b 1', value: 'b 1'},
+        {label: 'b A', value: 'b A'},
+        {label: 'b1 A', value: 'b1 A'},
+        {label: 'A b1', value: 'A b1'},
+        {label: 'A1 b1', value: 'A1 b1'},
+      ];
+
+      const result: NgxSelectModel<string>[] = ngxSelect.filterOptions(options, filterString);
+
+      expect(result.length).toBe(9);
     });
   });
 });
