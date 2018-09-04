@@ -16,10 +16,7 @@ export class NgxSelect<T> implements OnDestroy {
   constructor() {
     this.filterSubscription = this.filterControl.valueChanges.pipe(
       debounceTime(300),
-    ).subscribe(filterQuery => {
-      this.lastFilterQuery = filterQuery;
-      this.visibleOptions = this.filterOptions(this._originalOptions, filterQuery);
-    });
+    ).subscribe(filterQuery => this.visibleOptions = this.filterOptions(this._originalOptions, filterQuery));
   }
 
   ngOnDestroy() {
@@ -50,8 +47,9 @@ export class NgxSelect<T> implements OnDestroy {
     return options.filter(item => !item.selected).length === 0;
   }
 
-  filterOptions(options: NgxSelectModel<T>[], filterText: string): NgxSelectModel<T>[] {
-    return options.filter(item => item.label.toLowerCase().includes(filterText));
+  filterOptions(options: NgxSelectModel<T>[], filterQuery: string): NgxSelectModel<T>[] {
+    this.lastFilterQuery = filterQuery;
+    return options.filter(item => item.label.toLowerCase().includes(filterQuery));
   }
 
   setOriginalOptions(value: NgxSelectModel<T>[]) {

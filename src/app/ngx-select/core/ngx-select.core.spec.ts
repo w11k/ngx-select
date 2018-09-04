@@ -214,5 +214,24 @@ describe('NgxSelect', () => {
 
       expect(result.length).toBe(9);
     });
+
+    it('should filter options with last string with new options', () => {
+      const filterString = '1';
+
+      const options = [
+        {label: 'a', value: 'a'},
+        {label: '1', value: '1'},
+        {label: 'bA', value: 'bA'},
+        {label: 'b1', value: 'b1'},
+        {label: 'b 1', value: 'b 1'},
+        {label: 'b A', value: 'b A'},
+      ];
+
+      const result: NgxSelectModel<string>[] = ngxSelect.filterOptions(options, filterString);
+      expect(result.length).toBe(3);
+
+      ngxSelect.setOriginalOptions(options);
+      expect(ngxSelect.visibleOptions.length).toBe(3);
+    });
   });
 });
