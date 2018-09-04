@@ -119,4 +119,80 @@ describe('NgxSelect', () => {
       expect(result).toEqual(0);
     });
   });
+
+  describe('filterContent', () => {
+    it('should filter the list based on a string', () => {
+      const filterString = 'a';
+
+      const options = [
+        {label: 'a', value: 'a'},
+        {label: 'A', value: 'A'},
+        {label: 'b', value: 'b'},
+        {label: '1', value: '1'},
+        {label: 'ba', value: 'ba'},
+        {label: 'bA', value: 'bA'},
+        {label: 'b1', value: 'b1'},
+        {label: 'b 1', value: 'b 1'},
+        {label: 'b a', value: 'b a'},
+        {label: 'b A', value: 'b A'},
+      ];
+
+      const result: NgxSelectModel<string>[] = ngxSelect.filterOptions(options, filterString);
+      const resultLabels = result.map(i => i.label);
+
+      expect(result.length).toBe(6);
+      expect(resultLabels.includes('b')).toBeFalsy();
+      expect(resultLabels.includes('1')).toBeFalsy();
+      expect(resultLabels.includes('b1')).toBeFalsy();
+      expect(resultLabels.includes('b 1')).toBeFalsy();
+    });
+    it('should filter the list based on a number', () => {
+      const filterString = '1';
+
+      const options = [
+        {label: 'a', value: 'a'},
+        {label: 'A', value: 'A'},
+        {label: 'b', value: 'b'},
+        {label: '1', value: '1'},
+        {label: 'ba', value: 'ba'},
+        {label: 'bA', value: 'bA'},
+        {label: 'b1', value: 'b1'},
+        {label: 'b 1', value: 'b 1'},
+        {label: 'b a', value: 'b a'},
+        {label: 'b A', value: 'b A'},
+      ];
+
+      const result: NgxSelectModel<string>[] = ngxSelect.filterOptions(options, filterString);
+      const resultLabels = result.map(i => i.label);
+
+      expect(result.length).toBe(3);
+      expect(resultLabels.includes('1')).toBeTruthy();
+      expect(resultLabels.includes('b1')).toBeTruthy();
+      expect(resultLabels.includes('b 1')).toBeTruthy();
+    });
+    it('should filter the list based on mixed input', () => {
+      const filterString = 'b1';
+
+      const options = [
+        {label: 'a', value: 'a'},
+        {label: '1', value: '1'},
+        {label: 'bA', value: 'bA'},
+        {label: 'b1', value: 'b1'},
+        {label: 'b 1', value: 'b 1'},
+        {label: 'b A', value: 'b A'},
+        {label: 'b1 A', value: 'b1 A'},
+        {label: 'A b1', value: 'A b1'},
+        {label: 'A1 b1', value: 'A1 b1'},
+      ];
+
+      const result: NgxSelectModel<string>[] = ngxSelect.filterOptions(options, filterString);
+      const resultLabels = result.map(i => i.label);
+
+      expect(result.length).toBe(4);
+      expect(resultLabels.includes('b1')).toBeTruthy();
+      expect(resultLabels.includes('b1 A')).toBeTruthy();
+      expect(resultLabels.includes('A b1')).toBeTruthy();
+      expect(resultLabels.includes('A1 b1')).toBeTruthy();
+    });
+  });
 });

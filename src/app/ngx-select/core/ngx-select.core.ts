@@ -27,4 +27,8 @@ export class NgxSelect<T> {
   isAllSelected(options: NgxSelectModel<T>[]) {
     return options.filter(item => !item.selected).length === 0;
   }
+
+  filterOptions(options: NgxSelectModel<T>[], filterText: string): NgxSelectModel<T>[] {
+    return options.filter(item => item.label.toLowerCase().includes(filterText));
+  }
 }
