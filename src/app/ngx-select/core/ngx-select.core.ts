@@ -2,7 +2,6 @@ import { NgxSelectModel } from './ngx-select.model';
 import { FormControl } from '@angular/forms';
 import { OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 
 export class NgxSelect<T> implements OnDestroy {
   private _originalOptions: NgxSelectModel<T>[] = [];
@@ -15,7 +14,7 @@ export class NgxSelect<T> implements OnDestroy {
 
   constructor() {
     this.filterSubscription = this.filterControl.valueChanges.pipe(
-      debounceTime(300),
+      // debounceTime(300),
     ).subscribe(filterQuery => this.visibleOptions = this.filterOptions(this._originalOptions, filterQuery));
   }
 
@@ -59,5 +58,9 @@ export class NgxSelect<T> implements OnDestroy {
 
   get originalOptions() {
     return this._originalOptions;
+  }
+
+  resetFilter() {
+    this.filterControl.reset('');
   }
 }

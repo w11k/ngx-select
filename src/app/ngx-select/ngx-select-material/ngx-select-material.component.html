@@ -9,7 +9,7 @@
     <mat-form-field>
       <input matInput type="text" placeholder="Filter" [formControl]="filterControl">
     </mat-form-field>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="resetFilter()">
       <mat-icon>close</mat-icon>
     </button>
   </div>

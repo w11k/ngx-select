@@ -22,5 +22,4 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
   ngOnInit() {
     this.setHidden(false);
   }
-
 }
