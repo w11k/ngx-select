@@ -2,20 +2,5 @@
   <input matInput readonly (click)="toggleVisibility()" type="text" placeholder="Suchfeld">
 </mat-form-field>
 <button mat-icon-button (click)="toggleVisibility()">
-  <mat-icon>{{ hidden ? 'expand_more': 'expand_less'}}</mat-icon>
+  <mat-icon>{{ visible ? 'expand_less' : 'expand_more'}}</mat-icon>
 </button>
-<div class="select-container" [class.hidden]="hidden">
-  <div>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Filter" [formControl]="filterControl">
-    </mat-form-field>
-    <button mat-icon-button (click)="resetFilter()">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  <button mat-raised-button (click)="toggleAllNoneSelected()">all / none</button>
-  <mat-checkbox *ngFor="let value of visibleOptions"
-                [checked]="value.selected"
-                (change)="changeCheckbox(value)">{{value.label}}
-  </mat-checkbox>
-</div>

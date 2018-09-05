@@ -1,33 +1,33 @@
 import { NgxSelectModel } from './ngx-select.model';
 import { FormControl } from '@angular/forms';
 import { OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ReplaySubject, Subscription } from 'rxjs';
 
 export class NgxSelect<T> implements OnDestroy {
   private _originalOptions: NgxSelectModel<T>[] = [];
   private filterSubscription: Subscription;
   private lastFilterQuery = '';
 
-  hidden = true;
-  visibleOptions: NgxSelectModel<T>[] = [];
+  visibleOptions$: ReplaySubject<NgxSelectModel<T>[]> = new ReplaySubject(1);
   filterControl: FormControl = new FormControl('');
+  visible = false;
 
   constructor() {
+    this.visibleOptions$.next([]);
     this.filterSubscription = this.filterControl.valueChanges.pipe(
       // debounceTime(300),
-    ).subscribe(filterQuery => this.visibleOptions = this.filterOptions(this._originalOptions, filterQuery));
+    ).subscribe(filterQuery => {
+      const filteredOptions = this.filterOptions(this._originalOptions, filterQuery);
+      this.visibleOptions$.next(filteredOptions);
+    });
   }
 
   ngOnDestroy() {
     this.filterSubscription.unsubscribe();
   }
 
-  toggleVisibility() {
-    this.hidden = !this.hidden;
-  }
-
-  setHidden(value: boolean) {
-    this.hidden = value;
+  toggleVisibility(): void {
+    this.visible = !this.visible;
   }
 
   changeCheckbox(item: NgxSelectModel<T>) {
@@ -53,7 +53,8 @@ export class NgxSelect<T> implements OnDestroy {
 
   setOriginalOptions(value: NgxSelectModel<T>[]) {
     this._originalOptions = value;
-    this.visibleOptions = this.filterOptions(value, this.lastFilterQuery);
+    const filteredOptions = this.filterOptions(value, this.lastFilterQuery);
+    this.visibleOptions$.next(filteredOptions);
   }
 
   get originalOptions() {

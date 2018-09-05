@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { NgxSelect } from '../core/ngx-select.core';
 import { NgxSelectModel } from '../core/ngx-select.model';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { NgxSelectMaterialOverlayComponent } from './overlay/ngx-select-material-overlay.component';
 
 @Component({
   selector: 'ngx-select',
@@ -14,12 +17,55 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
     super.setOriginalOptions(value);
   }
 
+  overlayRef: OverlayRef;
 
-  constructor() {
+  constructor(private overlay: Overlay, private elementRef: ElementRef) {
     super();
+    const positionStrategy = this.overlay.position()
+      .flexibleConnectedTo(this.elementRef)
+      .withPositions([
+        {
+          originX: 'start',
+          originY: 'bottom',
+          overlayX: 'start',
+          overlayY: 'top',
+          offsetX: 0,
+          offsetY: 10,
+        },
+      ]);
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+    });
   }
 
   ngOnInit() {
-    this.setHidden(false);
+  }
+
+  toggleVisibility(): void {
+    if (this.visible === true) {
+      console.log('close the overlay');
+      this.overlayRef.detach();
+    } else {
+      const overlayPortal = new ComponentPortal(NgxSelectMaterialOverlayComponent);
+
+      const containerRef = this.overlayRef.attach(overlayPortal);
+
+      const overlayInstance = containerRef.instance;
+
+      overlayInstance.options$ = this.visibleOptions$;
+      overlayInstance.filterControl = this.filterControl;
+      overlayInstance.toggleSelected.subscribe(() => {
+        this.toggleAllNoneSelected();
+      });
+      overlayInstance.resetFilter.subscribe(() => {
+        this.resetFilter();
+      });
+      overlayInstance.changeCheckbox.subscribe((item: NgxSelectModel<T>) => {
+        this.changeCheckbox(item);
+      });
+    }
+
+    super.toggleVisibility();
   }
 }

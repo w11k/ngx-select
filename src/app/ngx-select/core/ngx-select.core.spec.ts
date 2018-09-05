@@ -1,5 +1,6 @@
 import { NgxSelect } from './ngx-select.core';
 import { NgxSelectModel } from './ngx-select.model';
+import { async } from '@angular/core/testing';
 
 describe('NgxSelect', () => {
   let ngxSelect: NgxSelect<string>;
@@ -10,26 +11,26 @@ describe('NgxSelect', () => {
 
   describe('toggleVisibility', () => {
     it('should toggle from false to true', () => {
-      ngxSelect.hidden = false;
+      ngxSelect.visible = false;
       ngxSelect.toggleVisibility();
-      expect(ngxSelect.hidden).toBe(true);
+      expect(ngxSelect.visible).toBe(true);
     });
     it('should toggle from true to false', () => {
-      ngxSelect.hidden = true;
+      ngxSelect.visible = true;
       ngxSelect.toggleVisibility();
-      expect(ngxSelect.hidden).toBe(false);
+      expect(ngxSelect.visible).toBe(false);
     });
     it('should toggle from false to true to false', () => {
-      ngxSelect.hidden = false;
+      ngxSelect.visible = false;
       ngxSelect.toggleVisibility();
       ngxSelect.toggleVisibility();
-      expect(ngxSelect.hidden).toBe(false);
+      expect(ngxSelect.visible).toBe(false);
     });
     it('should toggle from true to false to true', () => {
-      ngxSelect.hidden = true;
+      ngxSelect.visible = true;
       ngxSelect.toggleVisibility();
       ngxSelect.toggleVisibility();
-      expect(ngxSelect.hidden).toBe(true);
+      expect(ngxSelect.visible).toBe(true);
     });
   });
 
@@ -215,7 +216,7 @@ describe('NgxSelect', () => {
       expect(result.length).toBe(9);
     });
 
-    it('should filter options with last string with new options', () => {
+    it('should filter options with last string with new options', async(() => {
       const filterString = '1';
 
       const options = [
@@ -231,7 +232,9 @@ describe('NgxSelect', () => {
       expect(result.length).toBe(3);
 
       ngxSelect.setOriginalOptions(options);
-      expect(ngxSelect.visibleOptions.length).toBe(3);
-    });
+      ngxSelect.visibleOptions$.subscribe(visibleOptions => {
+        expect(visibleOptions.length).toBe(3);
+      });
+    }));
   });
 });

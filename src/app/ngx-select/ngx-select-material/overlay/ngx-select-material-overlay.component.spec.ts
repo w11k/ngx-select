@@ -1,34 +1,32 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgxSelectMaterialComponent } from './ngx-select-material.component';
+import { NgxSelectMaterialOverlayComponent } from './ngx-select-material-overlay.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OverlayModule } from '@angular/cdk/overlay';
 
-describe('NgxSelectMaterialComponent', () => {
-  let component: NgxSelectMaterialComponent<string>;
-  let fixture: ComponentFixture<NgxSelectMaterialComponent<string>>;
+describe('NgxSelectMaterialOverlayComponent', () => {
+  let component: NgxSelectMaterialOverlayComponent<string>;
+  let fixture: ComponentFixture<NgxSelectMaterialOverlayComponent<string>>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgxSelectMaterialComponent ],
       imports: [
         NoopAnimationsModule,
         MatInputModule,
         MatButtonModule,
         MatIconModule,
         MatCheckboxModule,
-        OverlayModule,
         FormsModule,
         ReactiveFormsModule,
       ],
+      declarations: [NgxSelectMaterialOverlayComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgxSelectMaterialComponent);
+    fixture = TestBed.createComponent(NgxSelectMaterialOverlayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
