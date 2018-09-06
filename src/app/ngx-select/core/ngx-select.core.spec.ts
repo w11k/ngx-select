@@ -237,4 +237,54 @@ describe('NgxSelect', () => {
       });
     }));
   });
+
+  describe('changeCheckbox', () => {
+
+    it('should change from false to true', async(() => {
+
+      ngxSelect.setOriginalOptions([
+        {label: '1', value: '1'},
+      ]);
+
+      ngxSelect.changeCheckbox({label: '1', value: '1'});
+
+      const firstCheckbox = ngxSelect.originalOptions.filter(item => item.label === '1');
+
+      expect(firstCheckbox.length).toBe(1);
+      expect(firstCheckbox[0].selected).toBeTruthy();
+    }));
+
+    it('should change from true to false', async(() => {
+
+      ngxSelect.setOriginalOptions([
+        {label: '1', value: '1', selected: true},
+      ]);
+
+      ngxSelect.changeCheckbox({label: '1', value: '1'});
+
+      const firstCheckbox = ngxSelect.originalOptions.filter(item => item.label === '1');
+
+      expect(firstCheckbox.length).toBe(1);
+      expect(firstCheckbox[0].selected).toBeFalsy();
+    }));
+
+    it('should only change specific element', async(() => {
+
+      ngxSelect.setOriginalOptions([
+        {label: '1', value: '1', selected: false},
+        {label: '2', value: '2', selected: false},
+      ]);
+
+      ngxSelect.changeCheckbox({label: '1', value: '1'});
+
+      const firstCheckbox = ngxSelect.originalOptions.filter(item => item.label === '1')[0];
+      const secondCheckbox = ngxSelect.originalOptions.filter(item => item.label === '2')[0];
+
+      expect(firstCheckbox).toBeDefined();
+      expect(firstCheckbox.selected).toBeTruthy();
+
+      expect(secondCheckbox).toBeDefined();
+      expect(secondCheckbox.selected).toBeFalsy();
+    }));
+  });
 });

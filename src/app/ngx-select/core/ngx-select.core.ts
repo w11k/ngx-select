@@ -31,7 +31,18 @@ export class NgxSelect<T> implements OnDestroy {
   }
 
   changeCheckbox(item: NgxSelectModel<T>) {
-    console.log(item);
+    const newOptions = this._originalOptions.map(option => {
+      if (option.label === item.label) {
+        return {
+          ...option,
+          selected: !option.selected,
+        } ;
+      } else {
+        return option;
+      }
+    });
+
+    this.setOriginalOptions(newOptions);
   }
 
   toggleAllNoneSelected() {
