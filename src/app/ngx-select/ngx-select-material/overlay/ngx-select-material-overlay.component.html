@@ -6,7 +6,7 @@
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<button mat-raised-button (click)="toggleSelected.emit()">all / none</button>
+<button mat-raised-button (click)="toggleSelected.emit()" class="all-button">all / none</button>
 <mat-checkbox *ngFor="let value of (options$ | async)"
               [checked]="value.selected"
               (change)="changeCheckbox.emit(value)">{{value.label}}
