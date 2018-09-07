@@ -1,16 +1,17 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgxSelect } from '../core/ngx-select.core';
 import { NgxSelectModel } from '../core/ngx-select.model';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { NgxSelectMaterialOverlayComponent } from './overlay/ngx-select-material-overlay.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-select',
   templateUrl: './ngx-select-material.component.html',
   styleUrls: ['./ngx-select-material.component.scss'],
 })
-export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnInit {
+export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnInit, OnDestroy {
 
   @Input()
   set originalOptions(value: NgxSelectModel<T>[]) {
@@ -18,6 +19,7 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
   }
 
   overlayRef: OverlayRef;
+  subscriptions: Subscription[] = [];
 
   constructor(private overlay: Overlay, private elementRef: ElementRef) {
     super();
@@ -42,9 +44,14 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.subscriptions.map(sub => sub.unsubscribe());
+  }
+
   toggleVisibility(): void {
     if (this.visible === true) {
-      console.log('close the overlay');
+      this.subscriptions.map(sub => sub.unsubscribe());
+      this.subscriptions = [];
       this.overlayRef.detach();
     } else {
       const overlayPortal = new ComponentPortal(NgxSelectMaterialOverlayComponent);
@@ -55,15 +62,16 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
 
       overlayInstance.options$ = this.visibleOptions$;
       overlayInstance.filterControl = this.filterControl;
-      overlayInstance.toggleSelected.subscribe(() => {
+      const toggleSub = overlayInstance.toggleSelected.subscribe(() => {
         this.toggleAllNoneSelected();
       });
-      overlayInstance.resetFilter.subscribe(() => {
+      const resetSub = overlayInstance.resetFilter.subscribe(() => {
         this.resetFilter();
       });
-      overlayInstance.changeCheckbox.subscribe((item: NgxSelectModel<T>) => {
+      const changeSub = overlayInstance.changeCheckbox.subscribe((item: NgxSelectModel<T>) => {
         this.changeCheckbox(item);
       });
+      this.subscriptions = this.subscriptions.concat([toggleSub, resetSub, changeSub]);
     }
 
     super.toggleVisibility();

@@ -1,5 +1,5 @@
 <mat-form-field>
-  <input matInput readonly (click)="toggleVisibility()" type="text" placeholder="Suchfeld">
+  <input matInput readonly (click)="toggleVisibility()" type="text" [placeholder]="placeholder$ | async">
 </mat-form-field>
 <button mat-icon-button (click)="toggleVisibility()">
   <mat-icon>{{ visible ? 'expand_less' : 'expand_more'}}</mat-icon>

@@ -11,8 +11,10 @@ export class NgxSelect<T> implements OnDestroy {
   visibleOptions$: ReplaySubject<NgxSelectModel<T>[]> = new ReplaySubject(1);
   filterControl: FormControl = new FormControl('');
   visible = false;
+  placeholder$: ReplaySubject<string> = new ReplaySubject(1);
 
   constructor() {
+    this.placeholder$.next('Searchfield');
     this.visibleOptions$.next([]);
     this.filterSubscription = this.filterControl.valueChanges.pipe(
       // debounceTime(300),
