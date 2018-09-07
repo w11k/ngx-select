@@ -11,10 +11,9 @@ export class NgxSelect<T> implements OnDestroy {
   visibleOptions$: ReplaySubject<NgxSelectModel<T>[]> = new ReplaySubject(1);
   filterControl: FormControl = new FormControl('');
   visible = false;
-  placeholder$: ReplaySubject<string> = new ReplaySubject(1);
+  placeholder = '';
 
   constructor() {
-    this.placeholder$.next('Searchfield');
     this.visibleOptions$.next([]);
     this.filterSubscription = this.filterControl.valueChanges.pipe(
       // debounceTime(300),
@@ -68,6 +67,19 @@ export class NgxSelect<T> implements OnDestroy {
     this._originalOptions = value;
     const filteredOptions = this.filterOptions(value, this.lastFilterQuery);
     this.visibleOptions$.next(filteredOptions);
+    this.placeholder = this.calculatePlaceHolder(value);
+  }
+
+  calculatePlaceHolder(value: NgxSelectModel<T>[]) {
+    const countSelectedItems = value.filter(item => item.selected).length;
+
+    if (countSelectedItems === 0) {
+      return 'Searchfield';
+    } else if (countSelectedItems <= 3) {
+      return `${value.filter(item => item.selected).map(item => item.label).join(', ')} selected`;
+    } else {
+      return `${countSelectedItems} selected`;
+    }
   }
 
   get originalOptions() {
