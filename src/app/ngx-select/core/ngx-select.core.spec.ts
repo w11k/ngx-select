@@ -236,6 +236,28 @@ describe('NgxSelect', () => {
         expect(visibleOptions.length).toBe(3);
       });
     }));
+
+    it('should filter case sensitive correctly', async(() => {
+      const filterString = 'Label';
+
+      const options = [
+        {label: 'Label 1', value: 'Label 1'},
+        {label: 'label', value: 'label'},
+        {label: 'label 1', value: 'label 1'},
+        {label: 'Label', value: 'Label'},
+        {label: 'b1', value: 'b1'},
+        {label: 'b 1', value: 'b 1'},
+        {label: 'b A', value: 'b A'},
+      ];
+
+      const result: NgxSelectModel<string>[] = ngxSelect.filterOptions(options, filterString);
+      expect(result.length).toBe(4);
+
+      ngxSelect.setOriginalOptions(options);
+      ngxSelect.visibleOptions$.subscribe(visibleOptions => {
+        expect(visibleOptions.length).toBe(4);
+      });
+    }));
   });
 
   describe('changeCheckbox', () => {

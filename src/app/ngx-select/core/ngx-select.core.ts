@@ -60,8 +60,9 @@ export class NgxSelect<T> implements OnDestroy {
   }
 
   filterOptions(options: NgxSelectModel<T>[], filterQuery: string): NgxSelectModel<T>[] {
-    this.lastFilterQuery = filterQuery;
-    return options.filter(item => item.label.toLowerCase().includes(filterQuery));
+    const filterToLowerCase = filterQuery.toLowerCase();
+    this.lastFilterQuery = filterToLowerCase;
+    return options.filter(item => item.label.toLowerCase().includes(filterToLowerCase));
   }
 
   private setInternalOptions(value: NgxSelectModel<T>[]) {
