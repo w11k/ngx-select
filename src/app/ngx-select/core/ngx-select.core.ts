@@ -5,6 +5,7 @@ import { ReplaySubject, Subscription } from 'rxjs';
 
 export class NgxSelect<T> implements OnDestroy {
   private _originalOptions: NgxSelectModel<T>[] = [];
+  private _internalOptionsCopy: NgxSelectModel<T>[] = [];
   private filterSubscription: Subscription;
   private lastFilterQuery = '';
 
@@ -18,7 +19,7 @@ export class NgxSelect<T> implements OnDestroy {
     this.filterSubscription = this.filterControl.valueChanges.pipe(
       // debounceTime(300),
     ).subscribe(filterQuery => {
-      const filteredOptions = this.filterOptions(this._originalOptions, filterQuery);
+      const filteredOptions = this.filterOptions(this._internalOptionsCopy, filterQuery);
       this.visibleOptions$.next(filteredOptions);
     });
   }
@@ -32,7 +33,7 @@ export class NgxSelect<T> implements OnDestroy {
   }
 
   changeCheckbox(item: NgxSelectModel<T>) {
-    const newOptions = this._originalOptions.map(option => {
+    const newOptions = this._internalOptionsCopy.map(option => {
       if (option.label === item.label) {
         return {
           ...option,
@@ -43,14 +44,14 @@ export class NgxSelect<T> implements OnDestroy {
       }
     });
 
-    this.setOriginalOptions(newOptions);
+    this.setInternalOptions(newOptions);
   }
 
   toggleAllNoneSelected() {
-    if (this.isAllSelected(this._originalOptions)) {
-      this.setOriginalOptions(this._originalOptions.map(item => ({...item, selected: false})));
+    if (this.isAllSelected(this._internalOptionsCopy)) {
+      this.setInternalOptions(this._internalOptionsCopy.map(item => ({...item, selected: false})));
     } else {
-      this.setOriginalOptions(this._originalOptions.map(item => ({...item, selected: true})));
+      this.setInternalOptions(this._internalOptionsCopy.map(item => ({...item, selected: true})));
     }
   }
 
@@ -63,8 +64,8 @@ export class NgxSelect<T> implements OnDestroy {
     return options.filter(item => item.label.toLowerCase().includes(filterQuery));
   }
 
-  setOriginalOptions(value: NgxSelectModel<T>[]) {
-    this._originalOptions = value;
+  private setInternalOptions(value: NgxSelectModel<T>[]) {
+    this._internalOptionsCopy = value;
     const filteredOptions = this.filterOptions(value, this.lastFilterQuery);
     this.visibleOptions$.next(filteredOptions);
     this.placeholder = this.calculatePlaceHolder(value);
@@ -82,8 +83,17 @@ export class NgxSelect<T> implements OnDestroy {
     }
   }
 
+  setOriginalOptions(value: NgxSelectModel<T>[]) {
+    this._originalOptions = value;
+    this.setInternalOptions(value.slice());
+  }
+
   get originalOptions() {
     return this._originalOptions;
+  }
+
+  get internalOptions() {
+    return this._internalOptionsCopy;
   }
 
   resetFilter() {
