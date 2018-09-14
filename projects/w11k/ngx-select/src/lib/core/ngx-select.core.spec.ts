@@ -2,11 +2,19 @@ import { NgxSelect } from './ngx-select.core';
 import { NgxSelectModel } from './ngx-select.model';
 import { async } from '@angular/core/testing';
 
+class NgxSelectorComp<T> extends NgxSelect<T> {
+  constructor() {
+    super();
+  }
+  emitUpdateValues(changeValues: NgxSelectModel<T>[]): void {
+  }
+}
+
 describe('NgxSelect', () => {
   let ngxSelect: NgxSelect<string>;
 
   beforeEach(() => {
-    ngxSelect = new NgxSelect<string>();
+    ngxSelect = new NgxSelectorComp<string>();
   });
 
   describe('toggleVisibility', () => {
