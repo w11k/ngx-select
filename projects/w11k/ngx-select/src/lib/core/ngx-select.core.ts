@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { OnDestroy } from '@angular/core';
 import { ReplaySubject, Subscription } from 'rxjs';
 
-export class NgxSelect<T> implements OnDestroy {
+export abstract class NgxSelect<T> implements OnDestroy {
   private _originalOptions: NgxSelectModel<T>[] = [];
   private _internalOptionsCopy: NgxSelectModel<T>[] = [];
   private filterSubscription: Subscription;
@@ -14,7 +14,7 @@ export class NgxSelect<T> implements OnDestroy {
   visible = false;
   placeholder = '';
 
-  constructor() {
+  protected constructor() {
     this.visibleOptions$.next([]);
     this.filterSubscription = this.filterControl.valueChanges.pipe(
       // debounceTime(300),
@@ -70,6 +70,7 @@ export class NgxSelect<T> implements OnDestroy {
     const filteredOptions = this.filterOptions(value, this.lastFilterQuery);
     this.visibleOptions$.next(filteredOptions);
     this.placeholder = this.calculatePlaceHolder(value);
+    this.emitUpdateValues(value);
   }
 
   calculatePlaceHolder(value: NgxSelectModel<T>[]) {
@@ -100,4 +101,6 @@ export class NgxSelect<T> implements OnDestroy {
   resetFilter() {
     this.filterControl.reset('');
   }
+
+  abstract emitUpdateValues(changeValues: NgxSelectModel<T>[]): void;
 }

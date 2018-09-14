@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { NgxSelect } from '../core/ngx-select.core';
 import { NgxSelectModel } from '../core/ngx-select.model';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
@@ -17,6 +17,8 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
   set originalOptions(value: NgxSelectModel<T>[]) {
     super.setOriginalOptions(value);
   }
+
+  @Output() changedOptions: EventEmitter<NgxSelectModel<T>[]> = new EventEmitter<NgxSelectModel<T>[]>();
 
   overlayRef: OverlayRef;
   subscriptions: Subscription[] = [];
@@ -75,5 +77,9 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
     }
 
     super.toggleVisibility();
+  }
+
+  emitUpdateValues(updatedValues: NgxSelectModel<T>[]): void {
+    this.changedOptions.emit(updatedValues);
   }
 }
