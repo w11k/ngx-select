@@ -14,7 +14,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prestart": "npm run build:lib",
     "build": "ng build",
+    "build:lib": "ng build @w11k/ngx-select",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "test:lib": "jest --config ./jest.lib.config.js",
@@ -24,7 +26,7 @@
     "test:ci": "jest --runInBand",
     "test:coverage": "jest --coverage",
     "test:clear": "jest --clearCache",
-    "test": "npm run test:lib && npm run build @w11k/ngx-select"
+    "test": "npm run test:lib && npm run build:lib"
   },
   "private": true,
   "dependencies": {
