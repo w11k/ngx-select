@@ -15,18 +15,18 @@ build-lib:
     paths:
     - dist/w11k/ngx-select
 
-build-demo:
-  image: node
-  dependencies:
-  - build-lib
-  stage: integration
-  script:
-  - npm ci
-  - npm run build
-  artifacts:
-    expire_in: 1 week
-    paths:
-    - dist/ngx-select-demo
+#build-demo:
+#  image: node
+#  dependencies:
+#  - build-lib
+#  stage: integration
+#  script:
+#  - npm ci
+#  - npm run build
+#  artifacts:
+#    expire_in: 1 week
+#    paths:
+#    - dist/ngx-select-demo
 
 #publish-demo:
 #  image: node
