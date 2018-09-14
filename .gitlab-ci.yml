@@ -13,7 +13,7 @@ build-lib:
   artifacts:
     expire_in: 1 week
     paths:
-    - dist/@w11k/ngx-select
+    - dist/w11k/ngx-select
 
 build-demo:
   image: node
@@ -49,7 +49,7 @@ publish:
   only:
   - tags
   script:
-  - cd dist/@w11k/ngx-select
+  - cd dist/w11k/ngx-select
   - cp ../../../README.md .
   - cp ../../../LICENSE .
   - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
