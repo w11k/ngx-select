@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NGX_SELECT_MOCK } from './ngx-select/mock.model';
+import { NGX_SELECT_MOCK } from './mock.model';
 
 @Component({
   selector: 'app-root',

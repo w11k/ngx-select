@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { NgxSelectModule } from './ngx-select/ngx-select.module';
+import { NgxSelectModule } from '@w11k/ngx-select';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({

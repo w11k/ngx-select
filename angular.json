@@ -132,7 +132,7 @@
       "root": "projects/w11k/ngx-select",
       "sourceRoot": "projects/w11k/ngx-select/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "ngx-select",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

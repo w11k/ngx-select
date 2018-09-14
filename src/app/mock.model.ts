@@ -1,4 +1,4 @@
-import { NgxSelectModel } from './core/ngx-select.model';
+import { NgxSelectModel } from '../../projects/w11k/ngx-select/src/lib/core/ngx-select.model';
 
 export const NGX_SELECT_MOCK: NgxSelectModel<String>[] = [
   {label: 'Label 1', value: 'Label1', selected: false},
