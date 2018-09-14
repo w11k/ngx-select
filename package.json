@@ -10,7 +10,7 @@
     "Philipp Burgmer",
     "Frederik von Berg"
   ],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
