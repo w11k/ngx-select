@@ -17,11 +17,14 @@
     "build": "ng build",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test:lib": "jest --config ./jest.lib.config.js",
+    "test:lib:watch": "jest --config ./jest.lib.config.js --watch",
+    "test:app": "jest --config ./jest.app.config.js",
+    "test:app:watch": "jest --config ./jest.app.config.js --watch",
     "test:ci": "jest --runInBand",
     "test:coverage": "jest --coverage",
-    "test:clear": "jest --clearCache"
+    "test:clear": "jest --clearCache",
+    "test": "npm run test:lib && npm run build @w11k/ngx-select"
   },
   "private": true,
   "dependencies": {
