@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnInit, OnDestroy {
 
   @Input()
-  set originalOptions(value: NgxSelectModel<T>[]) {
+  set options(value: NgxSelectModel<T>[]) {
     super.setOriginalOptions(value);
   }
 
