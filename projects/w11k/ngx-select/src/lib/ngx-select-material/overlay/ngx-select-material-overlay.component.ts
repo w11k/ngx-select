@@ -23,7 +23,7 @@ export class NgxSelectMaterialOverlayComponent<T> implements OnInit {
   }
 
   localResetFilter() {
-    this.filterControl.reset();
+    this.filterControl.reset('');
     this.resetFilter.emit();
   }
 
