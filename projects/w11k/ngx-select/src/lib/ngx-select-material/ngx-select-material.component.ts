@@ -40,6 +40,8 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
 
     this.overlayRef = this.overlay.create({
       positionStrategy,
+      hasBackdrop: true,
+      backdropClass: 'backdrop'
     });
   }
 
@@ -73,7 +75,12 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
       const changeSub = overlayInstance.changeCheckbox.subscribe((item: NgxSelectModel<T>) => {
         this.changeCheckbox(item);
       });
-      this.subscriptions = this.subscriptions.concat([toggleSub, resetSub, changeSub]);
+
+      const backDropClick = this.overlayRef.backdropClick().subscribe(() => {
+        this.toggleVisibility();
+      });
+
+      this.subscriptions = this.subscriptions.concat([toggleSub, resetSub, changeSub, backDropClick]);
     }
 
     super.toggleVisibility();
