@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { NgxSelectModel } from '../../core/ngx-select.model';
 import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
+import { NGX_SELECT_INTL_SERVICE, NgxSelectIntlService } from '../../core/ngx-select-intl.service';
 
 @Component({
   selector: 'ngx-select-overlay',
@@ -17,7 +18,9 @@ export class NgxSelectMaterialOverlayComponent<T> implements OnInit {
 
   filterControl: FormControl = new FormControl('');
 
-  constructor() { }
+
+  constructor(@Inject(NGX_SELECT_INTL_SERVICE) private intlService: NgxSelectIntlService) {
+  }
 
   ngOnInit() {
   }
@@ -27,4 +30,11 @@ export class NgxSelectMaterialOverlayComponent<T> implements OnInit {
     this.resetFilter.emit();
   }
 
+  getAllNoneSelectLabel(): string {
+    return this.intlService.allNoneSelect;
+  }
+
+  getFilterPlaceHolder(): string {
+    return this.intlService.filterPlaceholder;
+  }
 }

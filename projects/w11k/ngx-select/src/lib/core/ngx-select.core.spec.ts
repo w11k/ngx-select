@@ -1,10 +1,11 @@
 import { NgxSelect } from './ngx-select.core';
 import { NgxSelectModel } from './ngx-select.model';
 import { async } from '@angular/core/testing';
+import { DefaultNgxSelectIntlService } from './ngx-select-intl.service';
 
 class NgxSelectorComp<T> extends NgxSelect<T> {
   constructor() {
-    super();
+    super(new DefaultNgxSelectIntlService());
   }
   emitUpdateValues(changeValues: NgxSelectModel<T>[]): void {
   }
@@ -316,39 +317,5 @@ describe('NgxSelect', () => {
       expect(secondCheckbox).toBeDefined();
       expect(secondCheckbox.selected).toBeFalsy();
     }));
-  });
-
-  describe('calculatePlaceholder', () => {
-    it('should return placeholder for no values selected', () => {
-      const options: NgxSelectModel<string>[] = [];
-
-      const placeholder = ngxSelect.calculatePlaceHolder(options);
-
-      expect(placeholder).toBe('Searchfield');
-    });
-    it('should return label for up to 3 values selected', () => {
-      const options = [
-        {label: 'a', value: 'a', selected: true},
-        {label: '1', value: '1', selected: true},
-        {label: 'bA', value: 'bA', selected: true},
-        {label: 'test', value: 'test'},
-      ];
-
-      const placeholder = ngxSelect.calculatePlaceHolder(options);
-
-      expect(placeholder).toBe('a, 1, bA selected');
-    });
-    it('should return n-selected for more than 3 values selected', () => {
-      const options = [
-        {label: 'a', value: 'a', selected: true},
-        {label: '1', value: '1', selected: true},
-        {label: 'bA', value: 'bA', selected: true},
-        {label: 'test', value: 'test', selected: true},
-      ];
-
-      const placeholder = ngxSelect.calculatePlaceHolder(options);
-
-      expect(placeholder).toBe('4 selected');
-    });
   });
 });

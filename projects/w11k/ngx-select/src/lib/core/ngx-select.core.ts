@@ -2,6 +2,7 @@ import { NgxSelectModel } from './ngx-select.model';
 import { FormControl } from '@angular/forms';
 import { OnDestroy } from '@angular/core';
 import { ReplaySubject, Subscription } from 'rxjs';
+import { NgxSelectIntlService } from './ngx-select-intl.service';
 
 export abstract class NgxSelect<T> implements OnDestroy {
   private _originalOptions: NgxSelectModel<T>[] = [];
@@ -14,7 +15,7 @@ export abstract class NgxSelect<T> implements OnDestroy {
   visible = false;
   placeholder = '';
 
-  protected constructor() {
+  protected constructor(protected intlService: NgxSelectIntlService) {
     this.visibleOptions$.next([]);
     this.filterSubscription = this.filterControl.valueChanges.pipe(
       // debounceTime(300),
@@ -69,20 +70,8 @@ export abstract class NgxSelect<T> implements OnDestroy {
     this._internalOptionsCopy = value;
     const filteredOptions = this.filterOptions(value, this.lastFilterQuery);
     this.visibleOptions$.next(filteredOptions);
-    this.placeholder = this.calculatePlaceHolder(value);
+    this.placeholder = this.intlService.calculatePlaceHolder(value);
     this.emitUpdateValues(value);
-  }
-
-  calculatePlaceHolder(value: NgxSelectModel<T>[]) {
-    const countSelectedItems = value.filter(item => item.selected).length;
-
-    if (countSelectedItems === 0) {
-      return 'Searchfield';
-    } else if (countSelectedItems <= 3) {
-      return `${value.filter(item => item.selected).map(item => item.label).join(', ')} selected`;
-    } else {
-      return `${countSelectedItems} selected`;
-    }
   }
 
   setOriginalOptions(value: NgxSelectModel<T>[]) {

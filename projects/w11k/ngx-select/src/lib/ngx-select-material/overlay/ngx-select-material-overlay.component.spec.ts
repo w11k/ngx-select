@@ -4,6 +4,7 @@ import { NgxSelectMaterialOverlayComponent } from './ngx-select-material-overlay
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DefaultNgxSelectIntlService, NGX_SELECT_INTL_SERVICE } from '../../core/ngx-select-intl.service';
 
 describe('NgxSelectMaterialOverlayComponent', () => {
   let component: NgxSelectMaterialOverlayComponent<string>;
@@ -20,7 +21,10 @@ describe('NgxSelectMaterialOverlayComponent', () => {
         FormsModule,
         ReactiveFormsModule,
       ],
-      declarations: [NgxSelectMaterialOverlayComponent ]
+      declarations: [NgxSelectMaterialOverlayComponent ],
+      providers: [
+        { provide: NGX_SELECT_INTL_SERVICE, useClass: DefaultNgxSelectIntlService }
+      ],
     })
     .compileComponents();
   }));

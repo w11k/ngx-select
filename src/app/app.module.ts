@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSelectModule } from '@w11k/ngx-select';
+import { NgxSelectCustomIntlService } from './ngx-select-custom-intl.service';
 
 @NgModule({
   declarations: [
@@ -12,9 +13,8 @@ import { NgxSelectModule } from '@w11k/ngx-select';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    NgxSelectModule,
+    NgxSelectModule.forRoot({intlService: NgxSelectCustomIntlService}),
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

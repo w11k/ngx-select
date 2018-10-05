@@ -1,12 +1,12 @@
 <div>
   <mat-form-field>
-    <input matInput type="text" placeholder="Filter" [formControl]="filterControl">
+    <input matInput type="text" [placeholder]="getFilterPlaceHolder()" [formControl]="filterControl">
   </mat-form-field>
   <button mat-icon-button (click)="localResetFilter()">
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<button mat-raised-button (click)="toggleSelected.emit()" class="all-button">all / none</button>
+<button mat-raised-button (click)="toggleSelected.emit()" class="all-button">{{ getAllNoneSelectLabel() }}</button>
 <div class="checkbox-container">
   <mat-checkbox *ngFor="let value of (options$ | async)"
                 [checked]="value.selected"

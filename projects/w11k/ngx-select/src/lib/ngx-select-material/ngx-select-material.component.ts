@@ -1,10 +1,11 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { NgxSelect } from '../core/ngx-select.core';
 import { NgxSelectModel } from '../core/ngx-select.model';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { NgxSelectMaterialOverlayComponent } from './overlay/ngx-select-material-overlay.component';
 import { Subscription } from 'rxjs';
+import { NGX_SELECT_INTL_SERVICE, NgxSelectIntlService } from '../core/ngx-select-intl.service';
 
 @Component({
   selector: 'ngx-select',
@@ -23,8 +24,10 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
   overlayRef: OverlayRef;
   subscriptions: Subscription[] = [];
 
-  constructor(private overlay: Overlay, private elementRef: ElementRef) {
-    super();
+  constructor(private overlay: Overlay,
+              private elementRef: ElementRef,
+              @Inject(NGX_SELECT_INTL_SERVICE) intlService: NgxSelectIntlService) {
+    super(intlService);
     const positionStrategy = this.overlay.position()
       .flexibleConnectedTo(this.elementRef)
       .withPositions([
