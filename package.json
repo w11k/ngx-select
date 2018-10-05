@@ -16,7 +16,7 @@
     "start": "ng serve",
     "prestart": "npm run build:lib",
     "build": "ng build",
-    "build:lib": "ng build @w11k/ngx-select",
+    "build:lib": "ng build ngx-select",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "test:lib": "jest --config ./jest.lib.config.js",

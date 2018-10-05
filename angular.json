@@ -128,7 +128,7 @@
         }
       }
     },
-    "@w11k/ngx-select": {
+    "ngx-select": {
       "root": "projects/w11k/ngx-select",
       "sourceRoot": "projects/w11k/ngx-select/src",
       "projectType": "library",
