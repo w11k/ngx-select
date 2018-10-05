@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DefaultNgxSelectIntlService } from '../../projects/w11k/ngx-select/src/lib/core/ngx-select-intl.service';
+import { DefaultNgxSelectIntlService } from '@w11k/ngx-select';
 
 @Injectable()
 export class NgxSelectCustomIntlService extends DefaultNgxSelectIntlService {
