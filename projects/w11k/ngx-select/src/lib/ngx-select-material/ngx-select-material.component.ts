@@ -33,11 +33,11 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
       .withPositions([
         {
           originX: 'start',
-          originY: 'bottom',
+          originY: 'center',
           overlayX: 'start',
           overlayY: 'top',
           offsetX: 0,
-          offsetY: 10,
+          offsetY: 20,
         },
       ]);
 
