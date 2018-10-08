@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { NgxSelect } from '../core/ngx-select.core';
-import { NgxSelectModel } from '../core/ngx-select.model';
+import { NgxSelectModel, NgxSelectToggleState } from '../core/ngx-select.model';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { NgxSelectMaterialOverlayComponent } from './overlay/ngx-select-material-overlay.component';
@@ -20,6 +20,7 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
   }
 
   @Output() changedOptions: EventEmitter<NgxSelectModel<T>[]> = new EventEmitter<NgxSelectModel<T>[]>();
+  @Output() changeToggleState: EventEmitter<NgxSelectToggleState> = new EventEmitter<NgxSelectToggleState>();
 
   overlayRef: OverlayRef;
   subscriptions: Subscription[] = [];

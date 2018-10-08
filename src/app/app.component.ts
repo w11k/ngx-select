@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NGX_SELECT_MOCK } from './mock.model';
-import { NgxSelectModel } from '@w11k/ngx-select';
+import { NgxSelectModel, NgxSelectToggleState } from '@w11k/ngx-select';
 
 @Component({
   selector: 'app-root',
@@ -13,5 +13,9 @@ export class AppComponent {
 
   logChangedOptions(changedOptions: NgxSelectModel<string>[]) {
     console.log(changedOptions);
+  }
+
+  logToggleState(toggleState: NgxSelectToggleState) {
+    console.log(toggleState);
   }
 }

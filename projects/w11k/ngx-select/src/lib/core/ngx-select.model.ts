@@ -3,3 +3,8 @@ export interface NgxSelectModel<T> {
   value: T;
   selected?: boolean;
 }
+
+export enum NgxSelectToggleState {
+  ALL = 'all',
+  NONE = 'none'
+}
