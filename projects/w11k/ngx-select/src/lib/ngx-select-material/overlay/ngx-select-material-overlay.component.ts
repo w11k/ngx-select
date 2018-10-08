@@ -17,7 +17,7 @@ export class NgxSelectMaterialOverlayComponent<T> implements OnInit {
   @Input() options$: Observable<NgxSelectModel<T>[]> = of([]);
 
   filterControl: FormControl = new FormControl('');
-
+  checkboxControl: FormControl = new FormControl('');
 
   constructor(@Inject(NGX_SELECT_INTL_SERVICE) private intlService: NgxSelectIntlService) {
   }

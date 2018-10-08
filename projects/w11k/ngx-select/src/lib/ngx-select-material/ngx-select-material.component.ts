@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { NgxSelect } from '../core/ngx-select.core';
 import { NgxSelectModel } from '../core/ngx-select.model';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
@@ -6,11 +6,19 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { NgxSelectMaterialOverlayComponent } from './overlay/ngx-select-material-overlay.component';
 import { Subscription } from 'rxjs';
 import { NGX_SELECT_INTL_SERVICE, NgxSelectIntlService } from '../core/ngx-select-intl.service';
+import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'ngx-select',
   templateUrl: './ngx-select-material.component.html',
   styleUrls: ['./ngx-select-material.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => NgxSelectMaterialComponent),
+      multi: true,
+    },
+  ]
 })
 export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnInit, OnDestroy {
 
@@ -23,6 +31,7 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
 
   overlayRef: OverlayRef;
   subscriptions: Subscription[] = [];
+  isDisabled = false;
 
   constructor(private overlay: Overlay,
               private elementRef: ElementRef,
@@ -91,5 +100,9 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
 
   emitUpdateValues(updatedValues: NgxSelectModel<T>[]): void {
     this.changedOptions.emit(updatedValues);
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
   }
 }

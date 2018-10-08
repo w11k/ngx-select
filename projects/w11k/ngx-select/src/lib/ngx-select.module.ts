@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxSelectMaterialComponent } from './ngx-select-material/ngx-select-material.component';
 import { MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule } from '@angular/material';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgxSelectMaterialOverlayComponent } from './ngx-select-material/overlay/ngx-select-material-overlay.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { DefaultNgxSelectIntlService, NGX_SELECT_INTL_SERVICE, NgxSelectConfig } from './core/ngx-select-intl.service';
@@ -15,7 +15,6 @@ import { DefaultNgxSelectIntlService, NGX_SELECT_INTL_SERVICE, NgxSelectConfig }
     MatIconModule,
     MatCheckboxModule,
     OverlayModule,
-    FormsModule,
     ReactiveFormsModule,
   ],
   declarations: [NgxSelectMaterialComponent, NgxSelectMaterialOverlayComponent],

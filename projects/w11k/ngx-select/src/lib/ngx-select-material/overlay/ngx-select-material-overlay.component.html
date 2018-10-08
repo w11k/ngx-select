@@ -9,7 +9,6 @@
 <button mat-raised-button (click)="toggleSelected.emit()" class="all-button">{{ getAllNoneSelectLabel() }}</button>
 <div class="checkbox-container">
   <mat-checkbox *ngFor="let value of (options$ | async)"
-                [checked]="value.selected"
-                (change)="changeCheckbox.emit(value)">{{value.label}}
+                [formControl]="">{{value.label}}
   </mat-checkbox>
 </div>
