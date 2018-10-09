@@ -15,6 +15,7 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   visible = false;
   placeholder = '';
   changeToggleState: EventEmitter<NgxSelectToggleState> = new EventEmitter<NgxSelectToggleState>();
+  changedOptions: EventEmitter<NgxSelectModel<T>[]> = new EventEmitter<NgxSelectModel<T>[]>();
 
   protected constructor(protected intlService: NgxSelectIntlService) {
     this.visibleOptions$.next([]);
@@ -44,6 +45,7 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
       ];
     }
     this.propagateChange(this._selectedOptions);
+    this.changedOptions.emit(this._selectedOptions);
   }
 
   toggleAllNoneSelected() {
@@ -70,6 +72,7 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   private setVisibleOptions(value: NgxSelectModel<T>[]) {
     const filteredOptions = this.filterOptions(value, this.lastFilterQuery);
     this.visibleOptions$.next(filteredOptions);
+    this.placeholder = this.intlService.calculatePlaceHolder(value);
   }
 
   setOriginalOptions(value: NgxSelectModel<T>[]) {
@@ -92,8 +95,6 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   resetFilter() {
     this.filterControl.reset('');
   }
-
-  abstract emitUpdateValues(changeValues: NgxSelectModel<T>[]): void;
 
   propagateChange = (_: NgxSelectModel<T>[]) => {
   };

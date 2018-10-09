@@ -99,10 +99,6 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
     super.toggleVisibility();
   }
 
-  emitUpdateValues(updatedValues: NgxSelectModel<T>[]): void {
-    this.changedOptions.emit(updatedValues);
-  }
-
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
   }
