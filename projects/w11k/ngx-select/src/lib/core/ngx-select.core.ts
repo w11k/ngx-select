@@ -15,6 +15,7 @@ export abstract class NgxSelect<T> implements OnDestroy {
   visible = false;
   placeholder = '';
   changeToggleState: EventEmitter<NgxSelectToggleState> = new EventEmitter<NgxSelectToggleState>();
+  changedOptions: EventEmitter<NgxSelectModel<T>[]> = new EventEmitter<NgxSelectModel<T>[]>();
 
   protected constructor(protected intlService: NgxSelectIntlService) {
     this.visibleOptions$.next([]);
@@ -47,6 +48,7 @@ export abstract class NgxSelect<T> implements OnDestroy {
     });
 
     this.setInternalOptions(newOptions);
+    this.changedOptions.emit(this._internalOptionsCopy);
   }
 
   toggleAllNoneSelected() {
@@ -74,7 +76,6 @@ export abstract class NgxSelect<T> implements OnDestroy {
     const filteredOptions = this.filterOptions(value, this.lastFilterQuery);
     this.visibleOptions$.next(filteredOptions);
     this.placeholder = this.intlService.calculatePlaceHolder(value);
-    this.emitUpdateValues(value);
   }
 
   setOriginalOptions(value: NgxSelectModel<T>[]) {
@@ -93,6 +94,4 @@ export abstract class NgxSelect<T> implements OnDestroy {
   resetFilter() {
     this.filterControl.reset('');
   }
-
-  abstract emitUpdateValues(changeValues: NgxSelectModel<T>[]): void;
 }
