@@ -14,7 +14,11 @@ export class AppComponent {
   formControl: FormControl;
 
   constructor() {
-    this.formControl = new FormControl();
+    this.formControl = new FormControl({
+      'Label 1': true,
+      'Label 2': false,
+      'Label 3': true,
+    });
     this.formControl.valueChanges.subscribe((data: NgxSelectModel<string>[]) => {
       console.log(data);
     });

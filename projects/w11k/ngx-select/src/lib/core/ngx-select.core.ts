@@ -126,7 +126,8 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
 
   abstract setDisabledState(isDisabled: boolean): void;
 
-  writeValue(obj: NgxSelectModel<T>[]): void {
+  writeValue(obj: {[label: string]: boolean | null}): void {
+    this.checkboxGroup.patchValue(obj);
   }
 
 
