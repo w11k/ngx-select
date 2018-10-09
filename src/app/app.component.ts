@@ -15,13 +15,9 @@ export class AppComponent {
 
   constructor() {
     this.formControl = new FormControl();
-    this.formControl.valueChanges.subscribe(data => {
+    this.formControl.valueChanges.subscribe((data: NgxSelectModel<string>[]) => {
       console.log(data);
     });
-  }
-
-  logChangedOptions(changedOptions: NgxSelectModel<string>[]) {
-    console.log(changedOptions);
   }
 
   logToggleState(toggleState: NgxSelectToggleState) {

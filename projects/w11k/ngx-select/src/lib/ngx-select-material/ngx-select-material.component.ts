@@ -6,7 +6,7 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { NgxSelectMaterialOverlayComponent } from './overlay/ngx-select-material-overlay.component';
 import { Subscription } from 'rxjs';
 import { NGX_SELECT_INTL_SERVICE, NgxSelectIntlService } from '../core/ngx-select-intl.service';
-import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'ngx-select',
@@ -27,7 +27,6 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
     super.setOriginalOptions(value);
   }
 
-  @Output() changedOptions: EventEmitter<NgxSelectModel<T>[]> = new EventEmitter<NgxSelectModel<T>[]>();
   @Output() changeToggleState: EventEmitter<NgxSelectToggleState> = new EventEmitter<NgxSelectToggleState>();
 
   overlayRef: OverlayRef;
@@ -79,21 +78,19 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
 
       overlayInstance.options$ = this.visibleOptions$;
       overlayInstance.filterControl = this.filterControl;
+      overlayInstance.checkboxGroup = this.checkboxGroup;
       const toggleSub = overlayInstance.toggleSelected.subscribe(() => {
         this.toggleAllNoneSelected();
       });
       const resetSub = overlayInstance.resetFilter.subscribe(() => {
         this.resetFilter();
       });
-      const changeSub = overlayInstance.changeCheckbox.subscribe((item: NgxSelectModel<T>) => {
-        this.changeCheckbox(item);
-      });
 
       const backDropClick = this.overlayRef.backdropClick().subscribe(() => {
         this.toggleVisibility();
       });
 
-      this.subscriptions = this.subscriptions.concat([toggleSub, resetSub, changeSub, backDropClick]);
+      this.subscriptions = this.subscriptions.concat([toggleSub, resetSub, backDropClick]);
     }
 
     super.toggleVisibility();

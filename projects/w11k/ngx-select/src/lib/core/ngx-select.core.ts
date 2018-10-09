@@ -1,21 +1,21 @@
 import { NgxSelectModel, NgxSelectToggleState } from './ngx-select.model';
-import { ControlValueAccessor, FormControl } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
 import { EventEmitter, OnDestroy } from '@angular/core';
 import { ReplaySubject, Subscription } from 'rxjs';
 import { NgxSelectIntlService } from './ngx-select-intl.service';
 
 export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   private _originalOptions: NgxSelectModel<T>[] = [];
-  private _selectedOptions: NgxSelectModel<T>[] = [];
   private filterSubscription: Subscription;
+  private checkboxGroupSubscription: Subscription = new Subscription();
   private lastFilterQuery = '';
 
   visibleOptions$: ReplaySubject<NgxSelectModel<T>[]> = new ReplaySubject(1);
   filterControl: FormControl = new FormControl('');
+  checkboxGroup: FormGroup = new FormGroup({});
   visible = false;
-  placeholder = '';
+  placeholder = this.intlService.searchFieldPlaceholder;
   changeToggleState: EventEmitter<NgxSelectToggleState> = new EventEmitter<NgxSelectToggleState>();
-  changedOptions: EventEmitter<NgxSelectModel<T>[]> = new EventEmitter<NgxSelectModel<T>[]>();
 
   protected constructor(protected intlService: NgxSelectIntlService) {
     this.visibleOptions$.next([]);
@@ -29,38 +29,45 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
 
   ngOnDestroy() {
     this.filterSubscription.unsubscribe();
+    this.checkboxGroupSubscription.unsubscribe();
   }
 
   toggleVisibility(): void {
     this.visible = !this.visible;
   }
 
-  changeCheckbox(item: NgxSelectModel<T>) {
-    if (this._selectedOptions.filter(selected => selected.value === item.value).length > 0) {
-      this._selectedOptions = this._selectedOptions.filter(selected => selected.value !== item.value);
-    } else {
-      this._selectedOptions = [
-        ...this._selectedOptions,
-        item,
-      ];
-    }
-    this.propagateChange(this._selectedOptions);
-    this.changedOptions.emit(this._selectedOptions);
-  }
-
   toggleAllNoneSelected() {
-    if (this.isAllSelected(this._originalOptions, this._selectedOptions)) {
-      this._selectedOptions = [];
+    const formControlKeys = this._originalOptions.map(item => item.label);
+    const selectedLenght = formControlKeys.filter(label => {
+      const formControl: AbstractControl | null = this.checkboxGroup.get(label);
+      if (formControl === null) {
+        return false;
+      } else {
+        return formControl.value === true;
+      }
+    }).length;
+
+    if (this._originalOptions.length === selectedLenght) {
+      const newValues: {[x: string]: boolean} = formControlKeys.map(label => ({[label]: false}))
+        .reduce((prev, curr) => {
+          return {
+            ...prev,
+            ...curr,
+          };
+        }, {});
+      this.checkboxGroup.setValue( newValues);
       this.changeToggleState.emit(NgxSelectToggleState.NONE);
     } else {
-      this._selectedOptions = this._originalOptions.slice();
+      const newValues: {[x: string]: boolean} = formControlKeys.map(label => ({[label]: true}))
+        .reduce((prev, curr) => {
+          return {
+            ...prev,
+            ...curr,
+          };
+        }, {});
+      this.checkboxGroup.setValue( newValues);
       this.changeToggleState.emit(NgxSelectToggleState.ALL);
     }
-    this.propagateChange(this._selectedOptions);
-  }
-
-  isAllSelected(options: NgxSelectModel<T>[], selectedOptions: NgxSelectModel<T>[]) {
-    return options.length === selectedOptions.length;
   }
 
   filterOptions(options: NgxSelectModel<T>[], filterQuery: string): NgxSelectModel<T>[] {
@@ -72,29 +79,40 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   private setVisibleOptions(value: NgxSelectModel<T>[]) {
     const filteredOptions = this.filterOptions(value, this.lastFilterQuery);
     this.visibleOptions$.next(filteredOptions);
-    this.placeholder = this.intlService.calculatePlaceHolder(value);
+  }
+
+  private calculateFormGroup(values: NgxSelectModel<T>[]) {
+    const formControlsArr: {[label: string]: FormControl}[] = values.map(value => ({ [value.label]: new FormControl()}));
+    const formControls: {[label: string]: FormControl} = formControlsArr.reduce((prev, curr) => {
+      return {
+        ...prev,
+        ...curr,
+      };
+    }, {});
+    this.checkboxGroup = new FormGroup(formControls);
+    this.checkboxGroupSubscription.unsubscribe();
+    this.checkboxGroupSubscription = this.checkboxGroup.valueChanges.subscribe(data => {
+      const keys = Object.keys(data);
+      const placeHolderKeys = keys.filter(key => data[key] !== null && data[key] === true);
+      this.placeholder = this.intlService.calculatePlaceHolder(placeHolderKeys);
+      this.propagateChange(data);
+    });
   }
 
   setOriginalOptions(value: NgxSelectModel<T>[]) {
     this._originalOptions = value;
     this.setVisibleOptions(value);
+    this.calculateFormGroup(value);
   }
 
   get originalOptions() {
     return this._originalOptions;
   }
 
-  get selectedOptions() {
-    return this._selectedOptions;
-  }
-
-  set selectedOptions(values: NgxSelectModel<T>[]) {
-    this._selectedOptions = values;
-  }
-
   resetFilter() {
     this.filterControl.reset('');
   }
+
 
   propagateChange = (_: NgxSelectModel<T>[]) => {
   };

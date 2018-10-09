@@ -5,7 +5,7 @@ export interface NgxSelectIntlService {
   filterPlaceholder: string;
   searchFieldPlaceholder: string;
   selected: string;
-  calculatePlaceHolder(selectOptions: {label: string, selected?: boolean}[]): string;
+  calculatePlaceHolder(selectedLabels: string[]): string;
 }
 
 export const NGX_SELECT_INTL_SERVICE = new InjectionToken<NgxSelectIntlService>('NGX_SELECT_INTL_SERVICE');
@@ -24,15 +24,13 @@ export class DefaultNgxSelectIntlService implements NgxSelectIntlService {
 
   constructor() { }
 
-  calculatePlaceHolder(selectOptions: {label: string, selected?: boolean}[]) {
-    const countSelectedItems = selectOptions.filter(item => item.selected).length;
-
-    if (countSelectedItems === 0) {
+  calculatePlaceHolder(selectedLabels: string[]) {
+    if (selectedLabels.length === 0) {
       return this.searchFieldPlaceholder;
-    } else if (countSelectedItems <= 3) {
-      return `${selectOptions.filter(item => item.selected).map(item => item.label).join(', ')} ${this.selected}`;
+    } else if (selectedLabels.length <= 3) {
+      return `${selectedLabels.join(', ')} ${this.selected}`;
     } else {
-      return `${countSelectedItems} ${this.selected}`;
+      return `${selectedLabels.length} ${this.selected}`;
     }
   }
 }

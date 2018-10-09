@@ -7,8 +7,6 @@ class NgxSelectorComp<T> extends NgxSelect<T> {
   constructor() {
     super(new DefaultNgxSelectIntlService());
   }
-  emitUpdateValues(changeValues: NgxSelectModel<T>[]): void {
-  }
 
   setDisabledState(isDisabled: boolean): void {
   }
@@ -46,92 +44,51 @@ describe('NgxSelect', () => {
     });
   });
 
-  describe('isAllSelected', () => {
-    it('should return true if all options are selected', () => {
-      const options: NgxSelectModel<string>[] = [
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-      ];
-
-      const selectedOptions: NgxSelectModel<string>[] = [
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-      ];
-
-      expect(ngxSelect.isAllSelected(options, selectedOptions)).toBe(true);
-    });
-    it('should return false if one options is unselected', () => {
-      const options: NgxSelectModel<string>[] = [
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-      ];
-
-      const selectedOptions: NgxSelectModel<string>[] = [
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-      ];
-
-      expect(ngxSelect.isAllSelected(options, selectedOptions)).toBe(false);
-    });
-    it('should return false if more options are unselected', () => {
-      const options: NgxSelectModel<string>[] = [
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-      ];
-
-      expect(ngxSelect.isAllSelected(options, [])).toBe(false);
-    });
-  });
-
   describe('toggleAllNoneSelected', () => {
     it('should set all to selected if one is unselected', () => {
       ngxSelect.setOriginalOptions([
         {label: '1', value: '1'},
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
+        {label: '2', value: '1'},
+        {label: '3', value: '1'},
       ]);
 
       ngxSelect.toggleAllNoneSelected();
 
-      const result = ngxSelect.selectedOptions.length;
+      const result = Object.values(ngxSelect.checkboxGroup.value).filter(value => value === true).length;
       expect(result).toEqual(3);
     });
     it('should set all to selected if more are unselected', () => {
       ngxSelect.setOriginalOptions([
         {label: '1', value: '1'},
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
+        {label: '2', value: '1'},
+        {label: '3', value: '1'},
       ]);
 
-      ngxSelect.selectedOptions = [
-        {label: '1', value: '1'},
-      ];
+      ngxSelect.checkboxGroup.patchValue({
+        ['1']: true,
+      });
 
       ngxSelect.toggleAllNoneSelected();
 
-      const result = ngxSelect.selectedOptions.length;
+      const result = Object.values(ngxSelect.checkboxGroup.value).filter(value => value === true).length;
       expect(result).toEqual(3);
     });
     it('should set all to unselected if all are selected', () => {
       ngxSelect.setOriginalOptions([
         {label: '1', value: '1'},
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
+        {label: '2', value: '1'},
+        {label: '3', value: '1'},
       ]);
 
-      ngxSelect.selectedOptions = [
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-        {label: '1', value: '1'},
-      ];
+      ngxSelect.checkboxGroup.patchValue({
+        ['1']: true,
+        ['2']: true,
+        ['3']: true,
+      });
 
       ngxSelect.toggleAllNoneSelected();
 
-      const result = ngxSelect.selectedOptions.length;
+      const result = Object.values(ngxSelect.checkboxGroup.value).filter(value => value === true).length;
       expect(result).toEqual(0);
     });
   });
@@ -272,51 +229,6 @@ describe('NgxSelect', () => {
       ngxSelect.visibleOptions$.subscribe(visibleOptions => {
         expect(visibleOptions.length).toBe(4);
       });
-    }));
-  });
-
-  describe('changeCheckbox', () => {
-
-    it('should change from false to true', async(() => {
-
-      ngxSelect.setOriginalOptions([
-        {label: '1', value: '1'},
-      ]);
-
-      ngxSelect.changeCheckbox({label: '1', value: '1'});
-
-      const firstCheckbox = ngxSelect.selectedOptions;
-
-      expect(firstCheckbox.length).toBe(1);
-    }));
-
-    it('should change from true to false', async(() => {
-
-      ngxSelect.selectedOptions = [
-        {label: '1', value: '1'},
-      ];
-
-      ngxSelect.changeCheckbox({label: '1', value: '1'});
-
-      const firstCheckbox = ngxSelect.selectedOptions;
-
-      expect(firstCheckbox.length).toBe(0);
-    }));
-
-    it('should only change specific element', async(() => {
-
-      ngxSelect.setOriginalOptions([
-        {label: '1', value: '1'},
-        {label: '2', value: '2'},
-      ]);
-
-      ngxSelect.changeCheckbox({label: '1', value: '1'});
-
-      const firstCheckbox = ngxSelect.selectedOptions.filter(item => item.label === '1')[0];
-      const secondCheckbox = ngxSelect.selectedOptions.filter(item => item.label === '2')[0];
-
-      expect(firstCheckbox).toBeDefined();
-      expect(secondCheckbox).toBeUndefined();
     }));
   });
 });
