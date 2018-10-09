@@ -14,6 +14,7 @@ export class NgxSelectMaterialOverlayComponent<T> implements OnInit {
   @Output() resetFilter: EventEmitter<void> = new EventEmitter();
   @Output() toggleSelected: EventEmitter<void> = new EventEmitter();
   @Input() options$: Observable<NgxSelectModel<T>[]> = of([]);
+  @Input() isDisabled = false;
 
   filterControl: FormControl = new FormControl('');
   checkboxGroup: FormGroup = new FormGroup({});

@@ -31,7 +31,6 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
 
   overlayRef: OverlayRef;
   subscriptions: Subscription[] = [];
-  isDisabled = false;
 
   constructor(private overlay: Overlay,
               private elementRef: ElementRef,
@@ -79,6 +78,7 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
       overlayInstance.options$ = this.visibleOptions$;
       overlayInstance.filterControl = this.filterControl;
       overlayInstance.checkboxGroup = this.checkboxGroup;
+      overlayInstance.isDisabled = this.isDisabled;
       const toggleSub = overlayInstance.toggleSelected.subscribe(() => {
         this.toggleAllNoneSelected();
       });
@@ -94,9 +94,5 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
     }
 
     super.toggleVisibility();
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
   }
 }

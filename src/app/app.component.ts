@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 })
 export class AppComponent {
   mockData = NGX_SELECT_MOCK;
-
+  private _disable = false;
   formControl: FormControl;
 
   constructor() {
@@ -26,5 +26,14 @@ export class AppComponent {
 
   logToggleState(toggleState: NgxSelectToggleState) {
     console.log(toggleState);
+  }
+
+  disable() {
+    this._disable = !this._disable;
+    if (this._disable) {
+      this.formControl.disable();
+    } else {
+      this.formControl.enable();
+    }
   }
 }

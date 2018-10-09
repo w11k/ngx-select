@@ -16,6 +16,7 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   visible = false;
   placeholder = this.intlService.searchFieldPlaceholder;
   changeToggleState: EventEmitter<NgxSelectToggleState> = new EventEmitter<NgxSelectToggleState>();
+  isDisabled = false;
 
   protected constructor(protected intlService: NgxSelectIntlService) {
     this.visibleOptions$.next([]);
@@ -37,36 +38,38 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   }
 
   toggleAllNoneSelected() {
-    const formControlKeys = this._originalOptions.map(item => item.label);
-    const selectedLenght = formControlKeys.filter(label => {
-      const formControl: AbstractControl | null = this.checkboxGroup.get(label);
-      if (formControl === null) {
-        return false;
-      } else {
-        return formControl.value === true;
-      }
-    }).length;
+    if (!this.isDisabled) {
+      const formControlKeys = this._originalOptions.map(item => item.label);
+      const selectedLenght = formControlKeys.filter(label => {
+        const formControl: AbstractControl | null = this.checkboxGroup.get(label);
+        if (formControl === null) {
+          return false;
+        } else {
+          return formControl.value === true;
+        }
+      }).length;
 
-    if (this._originalOptions.length === selectedLenght) {
-      const newValues: {[x: string]: boolean} = formControlKeys.map(label => ({[label]: false}))
-        .reduce((prev, curr) => {
-          return {
-            ...prev,
-            ...curr,
-          };
-        }, {});
-      this.checkboxGroup.setValue( newValues);
-      this.changeToggleState.emit(NgxSelectToggleState.NONE);
-    } else {
-      const newValues: {[x: string]: boolean} = formControlKeys.map(label => ({[label]: true}))
-        .reduce((prev, curr) => {
-          return {
-            ...prev,
-            ...curr,
-          };
-        }, {});
-      this.checkboxGroup.setValue( newValues);
-      this.changeToggleState.emit(NgxSelectToggleState.ALL);
+      if (this._originalOptions.length === selectedLenght) {
+        const newValues: {[x: string]: boolean} = formControlKeys.map(label => ({[label]: false}))
+          .reduce((prev, curr) => {
+            return {
+              ...prev,
+              ...curr,
+            };
+          }, {});
+        this.checkboxGroup.setValue( newValues);
+        this.changeToggleState.emit(NgxSelectToggleState.NONE);
+      } else {
+        const newValues: {[x: string]: boolean} = formControlKeys.map(label => ({[label]: true}))
+          .reduce((prev, curr) => {
+            return {
+              ...prev,
+              ...curr,
+            };
+          }, {});
+        this.checkboxGroup.setValue( newValues);
+        this.changeToggleState.emit(NgxSelectToggleState.ALL);
+      }
     }
   }
 
@@ -124,7 +127,14 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   registerOnTouched(fn: NgxSelectModel<T>[]): void {
   }
 
-  abstract setDisabledState(isDisabled: boolean): void;
+  setDisabledState(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
+    if (isDisabled) {
+      this.checkboxGroup.disable();
+    } else {
+      this.checkboxGroup.enable();
+    }
+  }
 
   writeValue(obj: {[label: string]: boolean | null}): void {
     this.checkboxGroup.patchValue(obj);
