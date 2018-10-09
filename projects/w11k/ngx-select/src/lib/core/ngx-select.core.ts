@@ -41,7 +41,7 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
     if (!this.isDisabled) {
       const formControlKeys = this._originalOptions.map(item => item.label);
       const selectedLenght = formControlKeys.filter(label => {
-        const formControl: AbstractControl | null = this.checkboxGroup.get(label);
+        const formControl: AbstractControl | null = this.checkboxGroup.controls[label];
         if (formControl === null) {
           return false;
         } else {

@@ -9,7 +9,7 @@
 <button mat-raised-button (click)="toggleSelected.emit()" class="all-button" [disabled]="isDisabled">{{ getAllNoneSelectLabel() }}</button>
 <div class="checkbox-container">
   <ng-container [formGroup]="checkboxGroup" *ngFor="let value of (options$ | async); index as i">
-    <mat-checkbox [formControl]="checkboxGroup.get(value.label)">{{value.label}}
+    <mat-checkbox [formControl]="checkboxGroup.controls[value.label]">{{value.label}}
     </mat-checkbox>
   </ng-container>
 </div>
