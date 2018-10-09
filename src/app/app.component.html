@@ -1,4 +1,4 @@
-<ngx-select [options]="mockData" [formControl]="formControl"></ngx-select>
+<ngx-select [options]="mockData" [formControl]="formControl" (changeToggleState)="logToggleState($event)"></ngx-select>
 
 <div style="width: 140px; background-color: red;">
   Schmall

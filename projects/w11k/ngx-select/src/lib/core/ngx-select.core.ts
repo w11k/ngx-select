@@ -1,6 +1,6 @@
-import { NgxSelectModel } from './ngx-select.model';
+import { NgxSelectModel, NgxSelectToggleState } from './ngx-select.model';
 import { ControlValueAccessor, FormControl } from '@angular/forms';
-import { OnDestroy } from '@angular/core';
+import { EventEmitter, OnDestroy } from '@angular/core';
 import { ReplaySubject, Subscription } from 'rxjs';
 import { NgxSelectIntlService } from './ngx-select-intl.service';
 
@@ -14,6 +14,7 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   filterControl: FormControl = new FormControl('');
   visible = false;
   placeholder = '';
+  changeToggleState: EventEmitter<NgxSelectToggleState> = new EventEmitter<NgxSelectToggleState>();
 
   protected constructor(protected intlService: NgxSelectIntlService) {
     this.visibleOptions$.next([]);
@@ -48,8 +49,10 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   toggleAllNoneSelected() {
     if (this.isAllSelected(this._originalOptions, this._selectedOptions)) {
       this._selectedOptions = [];
+      this.changeToggleState.emit(NgxSelectToggleState.NONE);
     } else {
       this._selectedOptions = this._originalOptions.slice();
+      this.changeToggleState.emit(NgxSelectToggleState.ALL);
     }
     this.propagateChange(this._selectedOptions);
   }
