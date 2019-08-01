@@ -8,9 +8,10 @@
   "author": "W11K GmbH",
   "contributors": [
     "Philipp Burgmer",
-    "Frederik von Berg"
+    "Frederik von Berg",
+    "Sascha Engmann"
   ],
-  "version": "0.8.0",
+  "version": "0.9.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

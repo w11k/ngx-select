@@ -168,6 +168,15 @@ describe('NgxSelect', () => {
       expect(resultLabels.includes('A1 b1')).toBeTruthy();
     });
 
+    it('should tolerate writeValue with null value because Angular calls without our control', () => {
+      try {
+        ngxSelect.writeValue(null as any)
+        ngxSelect.writeValue(undefined as any)
+      } catch (e) {
+        fail('Should not happen but got ' + e)
+      }
+    });
+
     it('should filter nothing with empty input', () => {
       const filterString = '';
 
