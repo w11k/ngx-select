@@ -1,27 +1,37 @@
 # NgxSelect
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.2.
+Simple multiple select with filter.
 
-## Development server
+##Installation
+Use npm or yarn to install ``npm install --save @w11k/ngx-select`` or ``yarn add @w11k/ngx-select``
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+##Usage
+Import NgxSelectModule into your AppModule and in your feature module import without ``forRoot()``
+```typescript
+@NgModule({ imports: [NgxSelectModule.forRoot()] })
+export class AppModule { }
 
-## Code scaffolding
+@NgModule({ imports: [NgxSelectModule] })
+export class FeatureModule { }
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+##Customisation
+You can provide different labes using the Angular dependency injection. 
+Simply provide another implementation of ``DefaultNgxSelectIntlService``
+```typescript
+@Injectable()
+export class NgxSelectCustomIntlService extends DefaultNgxSelectIntlService {
 
-## Build
+  allNoneSelect = 'Alle / Keine';
+  filterPlaceholder = 'Filter';
+  searchFieldPlaceholder = 'Suche';
+  selected = 'ausgewählt';
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+  constructor() {
+    super();
+  }
+}
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+@NgModule({ imports: [NgxSelectModule.forRoot({intlService: NgxSelectCustomIntlService})] })
+export class AppModule { }
+``` 
