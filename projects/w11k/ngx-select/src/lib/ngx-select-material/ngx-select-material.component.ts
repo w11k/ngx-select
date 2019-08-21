@@ -49,10 +49,13 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
         },
       ]);
 
+    const scrollStrategy = this.overlay.scrollStrategies.block();
+
     this.overlayRef = this.overlay.create({
       positionStrategy,
       hasBackdrop: true,
-      backdropClass: 'backdrop'
+      backdropClass: 'backdrop',
+      scrollStrategy,
     });
   }
 
