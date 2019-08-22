@@ -5,7 +5,7 @@ export interface NgxSelectIntlService {
   filterPlaceholder: string;
   searchFieldPlaceholder: string;
   selected: string;
-  calculatePlaceHolder(selectedLabels: string[]): string;
+  calculatePlaceHolder(selectedLabels: string[], originalPlaceholder: string | undefined): string;
 }
 
 export const NGX_SELECT_INTL_SERVICE = new InjectionToken<NgxSelectIntlService>('NGX_SELECT_INTL_SERVICE');
@@ -24,9 +24,10 @@ export class DefaultNgxSelectIntlService implements NgxSelectIntlService {
 
   constructor() { }
 
-  calculatePlaceHolder(selectedLabels: string[]) {
+  calculatePlaceHolder(selectedLabels: string[], originalPlaceholder: string | undefined) {
+
     if (selectedLabels.length === 0) {
-      return this.searchFieldPlaceholder;
+      return !!originalPlaceholder ? originalPlaceholder : this.searchFieldPlaceholder;
     } else if (selectedLabels.length <= 3) {
       return `${selectedLabels.join(', ')} ${this.selected}`;
     } else {

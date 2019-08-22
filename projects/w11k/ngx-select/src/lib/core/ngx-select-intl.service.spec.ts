@@ -20,9 +20,16 @@ describe('NgxSelectIntlService', () => {
     it('should return placeholder for no values selected', () => {
       const options: string[] = [];
 
-      const placeholder = service.calculatePlaceHolder(options);
+      const placeholder = service.calculatePlaceHolder(options, undefined);
 
       expect(placeholder).toBe(service.searchFieldPlaceholder);
+    });
+    it('should return the given placeholder for no values selected', () => {
+      const options: string[] = [];
+
+      const placeholder = service.calculatePlaceHolder(options, 'return me');
+
+      expect(placeholder).toBe('return me');
     });
     it('should return label for up to 3 values selected', () => {
       const options: string[] = [
@@ -31,7 +38,7 @@ describe('NgxSelectIntlService', () => {
         'bA',
       ];
 
-      const placeholder = service.calculatePlaceHolder(options);
+      const placeholder = service.calculatePlaceHolder(options, undefined);
 
       expect(placeholder).toBe('a, 1, bA selected');
     });
@@ -43,7 +50,7 @@ describe('NgxSelectIntlService', () => {
         'test',
       ];
 
-      const placeholder = service.calculatePlaceHolder(options);
+      const placeholder = service.calculatePlaceHolder(options, undefined);
 
       expect(placeholder).toBe('4 selected');
     });

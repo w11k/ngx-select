@@ -27,6 +27,8 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
     super.setOriginalOptions(value);
   }
 
+  @Input() placeholder: string | undefined;
+
   @Output() changeToggleState: EventEmitter<NgxSelectToggleState> = new EventEmitter<NgxSelectToggleState>();
 
   overlayRef: OverlayRef;

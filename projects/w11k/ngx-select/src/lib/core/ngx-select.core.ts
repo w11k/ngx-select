@@ -14,7 +14,8 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   filterControl: FormControl = new FormControl('');
   checkboxGroup: FormGroup = new FormGroup({});
   visible = false;
-  placeholder = this.intlService.searchFieldPlaceholder;
+  placeholder: string | undefined = this.intlService.searchFieldPlaceholder;
+  visiblePlaceholder = '';
   changeToggleState: EventEmitter<NgxSelectToggleState> = new EventEmitter<NgxSelectToggleState>();
   isDisabled = false;
 
@@ -97,7 +98,7 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
     this.checkboxGroupSubscription = this.checkboxGroup.valueChanges.subscribe(data => {
       const keys = Object.keys(data);
       const placeHolderKeys = keys.filter(key => data[key] !== null && data[key] === true);
-      this.placeholder = this.intlService.calculatePlaceHolder(placeHolderKeys);
+      this.visiblePlaceholder = this.intlService.calculatePlaceHolder(placeHolderKeys, this.placeholder);
       this.propagateChange(data);
     });
   }
