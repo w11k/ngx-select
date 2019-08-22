@@ -39,19 +39,17 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
               @Inject(NGX_SELECT_INTL_SERVICE) intlService: NgxSelectIntlService) {
     super(intlService);
     const positionStrategy = this.overlay.position()
-      .flexibleConnectedTo(this.elementRef)
-      .withPositions([
-        {
-          originX: 'start',
-          originY: 'center',
-          overlayX: 'start',
-          overlayY: 'top',
-          offsetX: 0,
-          offsetY: 20,
-        },
-      ]);
+      .connectedTo(this.elementRef, {
+        originX: 'start',
+        originY: 'center',
+      }, {
+        overlayX: 'start',
+        overlayY: 'top',
+      })
+      .withOffsetX(0)
+      .withOffsetY(20);
 
-    const scrollStrategy = this.overlay.scrollStrategies.block();
+    const scrollStrategy = this.overlay.scrollStrategies.reposition();
 
     this.overlayRef = this.overlay.create({
       positionStrategy,
