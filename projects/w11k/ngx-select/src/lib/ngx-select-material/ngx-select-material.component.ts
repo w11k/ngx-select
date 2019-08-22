@@ -69,7 +69,7 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
   }
 
   toggleVisibility(): void {
-    if (this.visible === true) {
+    if (this.visible) {
       this.subscriptions.map(sub => sub.unsubscribe());
       this.subscriptions = [];
       this.overlayRef.detach();
