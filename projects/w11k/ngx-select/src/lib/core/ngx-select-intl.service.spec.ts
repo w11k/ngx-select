@@ -20,14 +20,14 @@ describe('NgxSelectIntlService', () => {
     it('should return placeholder for no values selected', () => {
       const options: string[] = [];
 
-      const placeholder = service.calculatePlaceHolder(options, undefined);
+      const placeholder = service.calculatePlaceHolder(options, 10, undefined);
 
       expect(placeholder).toBe(service.searchFieldPlaceholder);
     });
     it('should return the given placeholder for no values selected', () => {
       const options: string[] = [];
 
-      const placeholder = service.calculatePlaceHolder(options, 'return me');
+      const placeholder = service.calculatePlaceHolder(options, 10, 'return me');
 
       expect(placeholder).toBe('return me');
     });
@@ -38,7 +38,7 @@ describe('NgxSelectIntlService', () => {
         'bA',
       ];
 
-      const placeholder = service.calculatePlaceHolder(options, undefined);
+      const placeholder = service.calculatePlaceHolder(options, 10, undefined);
 
       expect(placeholder).toBe('a, 1, bA selected');
     });
@@ -50,9 +50,22 @@ describe('NgxSelectIntlService', () => {
         'test',
       ];
 
-      const placeholder = service.calculatePlaceHolder(options, undefined);
+      const placeholder = service.calculatePlaceHolder(options, 10, undefined);
 
       expect(placeholder).toBe('4 selected');
+    });
+
+    it('should return all selected', () => {
+      const options = [
+        'a',
+        '1',
+        'bA',
+        'test',
+      ];
+
+      const placeholder = service.calculatePlaceHolder(options, 4, undefined);
+
+      expect(placeholder).toBe('all');
     });
   });
 });

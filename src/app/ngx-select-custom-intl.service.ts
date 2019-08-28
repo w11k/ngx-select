@@ -8,6 +8,7 @@ export class NgxSelectCustomIntlService extends DefaultNgxSelectIntlService {
   filterPlaceholder = 'Filter';
   searchFieldPlaceholder = 'Suche';
   selected = 'ausgewählt';
+  allSelected = 'Alle ausgewählt';
 
   constructor() {
     super();

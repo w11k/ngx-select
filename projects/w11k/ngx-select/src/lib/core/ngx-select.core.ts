@@ -98,7 +98,7 @@ export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
     this.checkboxGroupSubscription = this.checkboxGroup.valueChanges.subscribe(data => {
       const keys = Object.keys(data);
       const placeHolderKeys = keys.filter(key => data[key] !== null && data[key] === true);
-      this.visiblePlaceholder = this.intlService.calculatePlaceHolder(placeHolderKeys, this.placeholder);
+      this.visiblePlaceholder = this.intlService.calculatePlaceHolder(placeHolderKeys, keys.length, this.placeholder);
       this.propagateChange(data);
     });
   }
