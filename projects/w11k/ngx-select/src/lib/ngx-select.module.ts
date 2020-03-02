@@ -25,7 +25,7 @@ import { DefaultNgxSelectIntlService, NGX_SELECT_INTL_SERVICE, NgxSelectConfig }
   entryComponents: [NgxSelectMaterialOverlayComponent],
 })
 export class NgxSelectModule {
-  static forRoot(config?: NgxSelectConfig): ModuleWithProviders {
+  static forRoot(config?: NgxSelectConfig): ModuleWithProviders<NgxSelectModule> {
     return {
       ngModule: NgxSelectModule,
       providers: [
