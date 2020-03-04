@@ -17,7 +17,7 @@
     "start": "ng serve",
     "prepublishOnlyy": "npm run build:lib",
     "build": "ng build",
-    "build:lib": "ng build ngx-select",
+    "build:lib": "ng build ngx-select --prod",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "test:lib": "jest --config ./jest.lib.config.js",
