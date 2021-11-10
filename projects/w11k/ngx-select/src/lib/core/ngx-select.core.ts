@@ -1,9 +1,10 @@
 import { NgxSelectModel, NgxSelectToggleState } from './ngx-select.model';
 import { AbstractControl, ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
-import { EventEmitter, OnDestroy } from '@angular/core';
+import { Directive, EventEmitter, OnDestroy } from '@angular/core';
 import { ReplaySubject, Subscription } from 'rxjs';
 import { NgxSelectIntlService } from './ngx-select-intl.service';
 
+@Directive()
 export abstract class NgxSelect<T> implements OnDestroy, ControlValueAccessor {
   private _originalOptions: NgxSelectModel<T>[] = [];
   private filterSubscription: Subscription;

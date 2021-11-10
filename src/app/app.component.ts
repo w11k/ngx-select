@@ -4,6 +4,7 @@ import { NgxSelectModel, NgxSelectToggleState } from '@w11k/ngx-select';
 import { FormControl } from '@angular/forms';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

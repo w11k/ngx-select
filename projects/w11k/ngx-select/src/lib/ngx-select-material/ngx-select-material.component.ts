@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, Inject, Input, OnDestroy, Output } from '@angular/core';
 import { NgxSelect } from '../core/ngx-select.core';
 import { NgxSelectModel, NgxSelectToggleState } from '../core/ngx-select.model';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
@@ -20,7 +20,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     },
   ]
 })
-export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnInit, OnDestroy {
+export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnDestroy {
 
   @Input()
   set options(value: NgxSelectModel<T>[]) {
@@ -39,15 +39,15 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
               @Inject(NGX_SELECT_INTL_SERVICE) intlService: NgxSelectIntlService) {
     super(intlService);
     const positionStrategy = this.overlay.position()
-      .connectedTo(this.elementRef, {
+      .flexibleConnectedTo(elementRef)
+      .withPositions([{
         originX: 'start',
         originY: 'center',
-      }, {
         overlayX: 'start',
-        overlayY: 'top',
-      })
-      .withOffsetX(0)
-      .withOffsetY(20);
+        overlayY: 'top'
+      }])
+      .withDefaultOffsetY(20)
+      .withPush(true);
 
     const scrollStrategy = this.overlay.scrollStrategies.reposition();
 
@@ -57,9 +57,6 @@ export class NgxSelectMaterialComponent<T> extends NgxSelect<T> implements OnIni
       backdropClass: 'backdrop',
       scrollStrategy,
     });
-  }
-
-  ngOnInit() {
   }
 
   ngOnDestroy() {

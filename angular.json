@@ -95,14 +95,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         }
@@ -125,11 +122,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         }
@@ -142,16 +139,16 @@
       "prefix": "ngx-select",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/w11k/ngx-select/tsconfig.lib.json",
             "project": "projects/w11k/ngx-select/ng-package.json"
           },
           "configurations": {
             "production": {
-              "project": "projects/w11k/ngx-select/ng-package.prod.json"
-            ,              "tsConfig": "projects/w11k/ngx-select/tsconfig.lib.prod.json"
-}
+              "project": "projects/w11k/ngx-select/ng-package.prod.json",
+              "tsConfig": "projects/w11k/ngx-select/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -163,14 +160,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/w11k/ngx-select/tsconfig.lib.json",
-              "projects/w11k/ngx-select/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/w11k/ngx-select/**/*.ts",
+              "projects/w11k/ngx-select/**/*.html"
             ]
           }
         }
