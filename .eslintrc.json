@@ -16,24 +16,25 @@
         "createDefaultProgram": true
       },
       "extends": [
-        "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "@w11k/eslint-config/lib/angular.recommended"
       ],
       "rules": {
+        "@angular-eslint/component-class-suffix": "warn",
         "@angular-eslint/component-selector": [
-          "error",
+          "warn",
           {
-            "prefix": "ngx-select",
-            "style": "kebab-case",
-            "type": "element"
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
           }
         ],
+        "@angular-eslint/directive-class-suffix": "warn",
         "@angular-eslint/directive-selector": [
-          "error",
+          "warn",
           {
-            "prefix": "ngx-select",
-            "style": "camelCase",
-            "type": "attribute"
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
           }
         ]
       }
