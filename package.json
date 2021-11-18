@@ -21,11 +21,11 @@
     "e2e": "ng e2e",
     "test": "ng test",
     "test:coverage": "ng test --coverage",
-    "test:clear": "jest --clearCache"
+    "test:clear": "jest --clearCache",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
-    "@angular-builders/jest": "^13.0.0",
     "@angular/animations": "^13.0.0",
     "@angular/cdk": "^13.0.0",
     "@angular/common": "^13.0.0",
@@ -42,6 +42,7 @@
     "zone.js": "^0.11.4"
   },
   "devDependencies": {
+    "@angular-builders/jest": "^13.0.0",
     "@angular-devkit/build-angular": "^13.0.1",
     "@angular-eslint/builder": "^12.6.1",
     "@angular-eslint/eslint-plugin": "^12.6.1",
@@ -59,6 +60,7 @@
     "@typescript-eslint/parser": "^5.3.0",
     "@w11k/eslint-config": "^0.1.2",
     "eslint": "^7.27.0",
+    "husky": "^7.0.4",
     "jest": "^27.3.1",
     "ng-packagr": "^13.0.3",
     "protractor": "^7.0.0",
