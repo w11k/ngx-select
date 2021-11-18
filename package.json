@@ -2,7 +2,6 @@
   "name": "@w11k/ngx-select-demo",
   "homepage": "https://github.com/w11k/ngx-select",
   "repository": {
-    "type": "git",
     "url": "git@github.com:w11k/ngx-select.git"
   },
   "author": "W11K GmbH",
@@ -20,17 +19,13 @@
     "build:lib": "ng build ngx-select --prod",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "test:lib": "jest --config ./jest.lib.config.js",
-    "test:lib:watch": "jest --config ./jest.lib.config.js --watch",
-    "test:app": "jest --config ./jest.app.config.js",
-    "test:app:watch": "jest --config ./jest.app.config.js --watch",
-    "test:ci": "jest --runInBand",
-    "test:coverage": "jest --coverage",
-    "test:clear": "jest --clearCache",
-    "test": "npm run test:lib && npm run build:lib"
+    "test": "ng test",
+    "test:coverage": "ng test --coverage",
+    "test:clear": "jest --clearCache"
   },
   "private": true,
   "dependencies": {
+    "@angular-builders/jest": "^13.0.0",
     "@angular/animations": "^13.0.0",
     "@angular/cdk": "^13.0.0",
     "@angular/common": "^13.0.0",
@@ -63,10 +58,8 @@
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
     "@w11k/eslint-config": "^0.1.2",
-    "babel-preset-env": "^1.7.0",
     "eslint": "^7.27.0",
-    "jest": "^23.6.0",
-    "jest-preset-angular": "^6.0.2",
+    "jest": "^27.3.1",
     "ng-packagr": "^13.0.3",
     "protractor": "^7.0.0",
     "ts-node": "^7.0.1",

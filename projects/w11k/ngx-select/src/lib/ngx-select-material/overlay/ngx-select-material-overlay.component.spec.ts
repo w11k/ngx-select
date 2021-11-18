@@ -1,35 +1,33 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { NgxSelectMaterialOverlayComponent } from './ngx-select-material-overlay.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DefaultNgxSelectIntlService, NGX_SELECT_INTL_SERVICE } from '../../core/ngx-select-intl.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NgxSelectMaterialOverlayComponent', () => {
   let component: NgxSelectMaterialOverlayComponent<string>;
-  let fixture: ComponentFixture<NgxSelectMaterialOverlayComponent<string>>;
+  let fixture: ComponentFixture<NgxSelectMaterialOverlayComponent<any>>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      declarations: [
+        NgxSelectMaterialOverlayComponent,
+      ],
       imports: [
-        NoopAnimationsModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCheckboxModule,
         FormsModule,
         ReactiveFormsModule,
+        MatIconModule,
+        MatInputModule,
+        MatFormFieldModule,
+        BrowserAnimationsModule
       ],
-      declarations: [NgxSelectMaterialOverlayComponent ],
       providers: [
-        { provide: NGX_SELECT_INTL_SERVICE, useClass: DefaultNgxSelectIntlService }
-      ],
-    })
-    .compileComponents();
+    { provide: NGX_SELECT_INTL_SERVICE, useClass: DefaultNgxSelectIntlService }
+        ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,21 +1,30 @@
 import { NgxSelect } from './ngx-select.core';
 import { NgxSelectModel } from './ngx-select.model';
-import { async } from '@angular/core/testing';
-import { DefaultNgxSelectIntlService } from './ngx-select-intl.service';
-
-class NgxSelectorComp<T> extends NgxSelect<T> {
-  constructor() {
-    super(new DefaultNgxSelectIntlService());
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-  }
-}
+import {  TestBed } from '@angular/core/testing';
+import { DefaultNgxSelectIntlService } from '@w11k/ngx-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('NgxSelect', () => {
+
   let ngxSelect: NgxSelect<string>;
 
+  class NgxSelectorComp<T> extends NgxSelect<T> {
+    constructor() {
+      super(new DefaultNgxSelectIntlService());
+    }
+  }
+
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [NgxSelect],
+      imports: [ReactiveFormsModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatIconModule,
+      ]
+    });
     ngxSelect = new NgxSelectorComp<string>();
   });
 
@@ -170,10 +179,10 @@ describe('NgxSelect', () => {
 
     it('should tolerate writeValue with null value because Angular calls without our control', () => {
       try {
-        ngxSelect.writeValue(null as any)
-        ngxSelect.writeValue(undefined as any)
+        ngxSelect.writeValue(null as any);
+        ngxSelect.writeValue(undefined as any);
       } catch (e) {
-        fail('Should not happen but got ' + e)
+        fail('Should not happen but got ' + e);
       }
     });
 
@@ -197,7 +206,7 @@ describe('NgxSelect', () => {
       expect(result.length).toBe(9);
     });
 
-    it('should filter options with last string with new options', async(() => {
+    it('should filter options with last string with new options', () => {
       const filterString = '1';
 
       const options = [
@@ -216,9 +225,9 @@ describe('NgxSelect', () => {
       ngxSelect.visibleOptions$.subscribe(visibleOptions => {
         expect(visibleOptions.length).toBe(3);
       });
-    }));
+    });
 
-    it('should filter case sensitive correctly', async(() => {
+    it('should filter case sensitive correctly', () => {
       const filterString = 'Label';
 
       const options = [
@@ -238,6 +247,6 @@ describe('NgxSelect', () => {
       ngxSelect.visibleOptions$.subscribe(visibleOptions => {
         expect(visibleOptions.length).toBe(4);
       });
-    }));
+    });
   });
 });
