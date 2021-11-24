@@ -1,6 +1,6 @@
 import { NgxSelect } from './ngx-select.core';
 import { NgxSelectModel } from './ngx-select.model';
-import {  TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { DefaultNgxSelectIntlService } from '@w11k/ngx-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -177,14 +177,14 @@ describe('NgxSelect', () => {
       expect(resultLabels.includes('A1 b1')).toBeTruthy();
     });
 
-    it('should tolerate writeValue with null value because Angular calls without our control', () => {
+    it('should tolerate writeValue with null value because Angular calls without our control', waitForAsync(() => {
       try {
         ngxSelect.writeValue(null as any);
         ngxSelect.writeValue(undefined as any);
       } catch (e) {
         fail('Should not happen but got ' + e);
       }
-    });
+    }));
 
     it('should filter nothing with empty input', () => {
       const filterString = '';
@@ -206,7 +206,7 @@ describe('NgxSelect', () => {
       expect(result.length).toBe(9);
     });
 
-    it('should filter options with last string with new options', () => {
+    it('should filter options with last string with new options', waitForAsync( () => {
       const filterString = '1';
 
       const options = [
@@ -225,9 +225,9 @@ describe('NgxSelect', () => {
       ngxSelect.visibleOptions$.subscribe(visibleOptions => {
         expect(visibleOptions.length).toBe(3);
       });
-    });
+    }));
 
-    it('should filter case sensitive correctly', () => {
+    it('should filter case sensitive correctly', waitForAsync(() => {
       const filterString = 'Label';
 
       const options = [
@@ -247,6 +247,6 @@ describe('NgxSelect', () => {
       ngxSelect.visibleOptions$.subscribe(visibleOptions => {
         expect(visibleOptions.length).toBe(4);
       });
-    });
+    }));
   });
 });
