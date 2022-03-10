@@ -1,15 +1,15 @@
-import { TestBed } from '@angular/core/testing';
 
 import { DefaultNgxSelectIntlService, NgxSelectIntlService } from './ngx-select-intl.service';
+import { TestBed } from '@angular/core/testing';
 
 describe('NgxSelectIntlService', () => {
   let service: DefaultNgxSelectIntlService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DefaultNgxSelectIntlService]
+      providers: [DefaultNgxSelectIntlService],
     });
-    service = TestBed.get(DefaultNgxSelectIntlService);
+    service = TestBed.inject(DefaultNgxSelectIntlService);
   });
 
   it('should be created', () => {

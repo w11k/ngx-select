@@ -1,21 +1,30 @@
 import { NgxSelect } from './ngx-select.core';
 import { NgxSelectModel } from './ngx-select.model';
-import { async } from '@angular/core/testing';
-import { DefaultNgxSelectIntlService } from './ngx-select-intl.service';
-
-class NgxSelectorComp<T> extends NgxSelect<T> {
-  constructor() {
-    super(new DefaultNgxSelectIntlService());
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-  }
-}
+import { TestBed, waitForAsync } from '@angular/core/testing';
+import { DefaultNgxSelectIntlService } from '@w11k/ngx-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('NgxSelect', () => {
+
   let ngxSelect: NgxSelect<string>;
 
+  class NgxSelectorComp<T> extends NgxSelect<T> {
+    constructor() {
+      super(new DefaultNgxSelectIntlService());
+    }
+  }
+
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [NgxSelect],
+      imports: [ReactiveFormsModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatIconModule,
+      ]
+    });
     ngxSelect = new NgxSelectorComp<string>();
   });
 
@@ -168,14 +177,14 @@ describe('NgxSelect', () => {
       expect(resultLabels.includes('A1 b1')).toBeTruthy();
     });
 
-    it('should tolerate writeValue with null value because Angular calls without our control', () => {
+    it('should tolerate writeValue with null value because Angular calls without our control', waitForAsync(() => {
       try {
-        ngxSelect.writeValue(null as any)
-        ngxSelect.writeValue(undefined as any)
+        ngxSelect.writeValue(null as any);
+        ngxSelect.writeValue(undefined as any);
       } catch (e) {
-        fail('Should not happen but got ' + e)
+        fail('Should not happen but got ' + e);
       }
-    });
+    }));
 
     it('should filter nothing with empty input', () => {
       const filterString = '';
@@ -197,7 +206,7 @@ describe('NgxSelect', () => {
       expect(result.length).toBe(9);
     });
 
-    it('should filter options with last string with new options', async(() => {
+    it('should filter options with last string with new options', waitForAsync( () => {
       const filterString = '1';
 
       const options = [
@@ -218,7 +227,7 @@ describe('NgxSelect', () => {
       });
     }));
 
-    it('should filter case sensitive correctly', async(() => {
+    it('should filter case sensitive correctly', waitForAsync(() => {
       const filterString = 'Label';
 
       const options = [

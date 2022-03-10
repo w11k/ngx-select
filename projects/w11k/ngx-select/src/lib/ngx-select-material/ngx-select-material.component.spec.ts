@@ -1,4 +1,3 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgxSelectMaterialComponent } from './ngx-select-material.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,12 +8,14 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { DefaultNgxSelectIntlService, NGX_SELECT_INTL_SERVICE } from '../core/ngx-select-intl.service';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 describe('NgxSelectMaterialComponent', () => {
   let component: NgxSelectMaterialComponent<string>;
-  let fixture: ComponentFixture<NgxSelectMaterialComponent<string>>;
+  let fixture: ComponentFixture<NgxSelectMaterialComponent<any>>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NgxSelectMaterialComponent ],
       imports: [
@@ -26,6 +27,7 @@ describe('NgxSelectMaterialComponent', () => {
         OverlayModule,
         FormsModule,
         ReactiveFormsModule,
+        MatFormFieldModule
       ],
       providers: [
         { provide: NGX_SELECT_INTL_SERVICE, useClass: DefaultNgxSelectIntlService }

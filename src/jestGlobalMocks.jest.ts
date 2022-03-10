@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 global['CSS'] = null;
 
 const mock = () => {
