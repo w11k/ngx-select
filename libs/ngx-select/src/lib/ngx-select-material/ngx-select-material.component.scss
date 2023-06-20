@@ -1,0 +1,16 @@
+:host,
+ngx-select {
+  display: flex;
+}
+
+mat-form-field {
+  width: 75%;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.backdrop {
+  background-color: transparent;
+}

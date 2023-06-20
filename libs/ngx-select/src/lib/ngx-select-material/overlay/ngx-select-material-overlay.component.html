@@ -1,0 +1,15 @@
+<div>
+  <mat-form-field>
+    <input matInput type="text" [placeholder]="getFilterPlaceHolder()" [formControl]="filterControl">
+    <button mat-icon-button matSuffix (click)="localResetFilter()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<button mat-raised-button (click)="toggleSelected.emit()" class="all-button" [disabled]="isDisabled">{{ getAllNoneSelectLabel() }}</button>
+<div class="checkbox-container">
+  <ng-container [formGroup]="checkboxGroup" *ngFor="let value of (options$ | async); index as i">
+    <mat-checkbox [formControl]="$any(checkboxGroup.controls[value.label])">{{value.label}}
+    </mat-checkbox>
+  </ng-container>
+</div>
