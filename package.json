@@ -7,7 +7,7 @@
     "clean": "shx rm -rf dist",
     "copy:readme": "shx cp README.md dist/libs/ngx-select",
     "make:dist": "shx mkdir -p dist",
-    "prepulishOnly": "run-s clean make:dist test build copy:readme",
+    "prepublishOnly": "run-s clean make:dist test build copy:readme",
     "start": "nx run ngx-select-demo:serve",
     "test": "nx test ngx-select -- --coverage"
   },
