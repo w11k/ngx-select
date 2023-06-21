@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DefaultNgxSelectIntlService, NGX_SELECT_INTL_SERVICE } from '../../core/ngx-select-intl.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NgxSelectMaterialOverlayComponent', () => {
@@ -25,8 +25,8 @@ describe('NgxSelectMaterialOverlayComponent', () => {
         BrowserAnimationsModule
       ],
       providers: [
-    { provide: NGX_SELECT_INTL_SERVICE, useClass: DefaultNgxSelectIntlService }
-        ]
+        { provide: NGX_SELECT_INTL_SERVICE, useClass: DefaultNgxSelectIntlService }
+      ]
     }).compileComponents();
   }));
 

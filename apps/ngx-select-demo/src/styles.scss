@@ -1,6 +1,9 @@
 @use '@angular/material' as mat;
 
+/* TODO(mdc-migration): Remove legacy-core once all legacy components are migrated */
 @include mat.legacy-core();
+
+@include mat.core();
 
 $my-primary: mat.define-palette(mat.$indigo-palette);
 $my-accent: mat.define-palette(mat.$pink-palette);
@@ -15,4 +18,8 @@ $my-theme: mat.define-light-theme((
 ));
 
 
+/* TODO(mdc-migration): Remove all-legacy-component-themes once all legacy components are migrated */
 @include mat.all-legacy-component-themes($my-theme);
+
+
+@include mat.all-component-themes($my-theme);

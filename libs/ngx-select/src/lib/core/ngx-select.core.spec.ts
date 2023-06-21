@@ -1,10 +1,10 @@
 import { NgxSelect } from './ngx-select.core';
 import { NgxSelectModel } from './ngx-select.model';
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { DefaultNgxSelectIntlService } from '@w11k/ngx-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { DefaultNgxSelectIntlService } from './ngx-select-intl.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 describe('NgxSelect', () => {
 
